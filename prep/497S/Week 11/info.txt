@@ -1,0 +1,45 @@
+This week we are continuing our investigation of deployment. You should watch these videos in order. The first link will send you to AWS Educate. AWS Educate allows you to signup without a credit card and gives you $50-$100 worth of credits to create EC2 VMs in the cloud. You will be able to deploy your team project app to a remote VM instance to experience what it is like to deploy and scale your application into the cloud. So, sign up! The other videos talk about how to use AWS and EC2, not from the context of AWS Educate, but I will be providing a separate video that demonstrates how to run docker containers in your cloud VM and how to access it remotely.
+
+Reading
+
+Chapter 6 - Deployment (pages 103 - 130)
+
+AWS EducateURL
+As part of this course I want everyone to have a taste of deploying a scalable web application in the cloud. "AWS Educate is Amazon's global initiative to provide students comprehensive resources for building skills in the cloud. It is a no-cost curriculum providing access to content, training, pathways, AWS services, and the AWS Educate Job Board with employment opportunities. Join AWS Educate and receive up to $100 in AWS Promotional Credit with an AWS Educate Starter Account."
+
+By signing up for AWS Educate you get free credits to create EC2 instances (Unix VMs) in the cloud and be able to deploy your application in an EC2 instance. As part of this week I would like everyone to signup for an AWS Educate account. Follow the instructions to do this by clicking the "Join AWS Educate" button found by following this link.
+
+Getting Started with AWS | Amazon Web Services BASICSURL
+There is bunch that is covered in this video that will help you understand the basics of AWS and various things you can do with it. It does not cover AWS Educate, rather, it covers how you create a personal account and pricing. You can safely ignore that for now - but, may be useful to you in the future. It is also a little dated in terms of the UI, but it is mostly the same. I found it useful enough that I am including it in this week's material.
+
+EC2 for Humans | Amazon Web Services BASICSURL
+AWS EC2 is one of the most important services AWS offers. Getting started with it can be simple and hard at the same time. With this video, we'll focus on the simple part. And make the hard part simple, too. This is a great video that will jump start your understanding on how to use EC2 VM instances.
+
+Running an Web System in the CloudURL
+This is the documentation for setting up docker on an EC2 instance. Basically, the commands you need to run after you have signed up for your AWS Educate account and created an EC2 instance are:
+
+$ sudo amazon-linux-extras install docker
+$ sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+$ sudo chmod +x /usr/local/bin/docker-compose
+You will likely need to restart your EC2 instance for this to work - I need to every time I do this. After you reboot, run these commands:
+
+$ sudo service docker start
+$ sudo usermod -a -G docker ec2-user
+Now, docker should be running. However, it is nice to have docker automatically run after a reboot. To do that, run this command:
+
+$ sudo chkconfig docker on
+After you do this you should have docker installed and ready to execute commands such as docker and docker-compose.
+
+If you want to see something working quickly, install git:
+
+$ sudo yum install git
+Then clone the example application we looked at last week:
+
+$ git clone https://github.com/paurakhsharma/python-microservice-fastapi
+Then go into the python-microservice-fastapi directory and run this:
+
+$ docker-compose up -d
+This will download the images, build images, and run the application. The last thing you need to do is open up the "Security" tab in your EC2 instance and add an inbound rule to allow incoming TCP connections on port 8080 with source being "0.0.0.0/0". You can now access this app in your browser with the domain name or IP address of the instance and the proper path.
+
+Resources
+https://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html
