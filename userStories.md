@@ -1,6 +1,6 @@
 # User stories: Candidate
 
-### Login:
+### Login
 1. As a candidate, I want to be able to create my account by setting up a username/email and password to access the website.
 
 2. As a candidate, I want to be able to log in into the system to authenticate my account and manage my resumes and account.
@@ -11,12 +11,12 @@
 
 5. As a candidate, I need to be able to change my password in order to keep my account updated and safe.
 
-### Subscription plan:
+### Subscription plan
 6. As a candidate, I want to be able to choose a subscription plan in order to access premium features.
 
 7. As a candidate, I need to be able to change my subscription plan at any time to select one that suits my needs and finances. 
 
-### Profile Info:
+### Profile Info
 8. As a candidate, I need to be able to add my profile information (education, work, etc.) into the website for saving my information and generating new resumes.
 
 9. As a candidate, I want to be able edit my profile information or change details for updating and improving my profile.
@@ -32,3 +32,6 @@
 13. As a candidate, I need to be able to see analysis on how my profile matches the job description. 
 
 14. As a candidate, I need to be able to see areas of growth (with new skills) to improve my matching with the job.
+
+### Resume saving
+15. As a candidate, I want to be able to save/download the resume to store locally and for uploading to jobs. 
