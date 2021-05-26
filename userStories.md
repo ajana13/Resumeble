@@ -22,3 +22,8 @@
 9. As a candidate, I want to be able edit my profile information or change details for updating and improving my profile.
 
 10. As a candidate, I want to have an option to auto-fill my profile by uploading a resume.
+
+### Create Resume
+11. As a candidate, I need to be able to paste a job description and have a resume tailored for that job with my current profile. 
+
+12. As a candidate, I need to be able to make changes easily to the generated resume to personalize it even further.
