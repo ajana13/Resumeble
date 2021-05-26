@@ -7,14 +7,14 @@
 
 3. As a candidate, I want to be able to save cookies to remember my identity for quicker access.
 
-4. As a candidate, I need to be able to reset my password using my email address to regain access to my account in case I have forgotten my password. 
+4. As a candidate, I need to be able to reset my password using my email address to regain access to my account in case I have forgotten my password.
 
 5. As a candidate, I need to be able to change my password in order to keep my account updated and safe.
 
 ### Subscription plan
 6. As a candidate, I want to be able to choose a subscription plan in order to access premium features.
 
-7. As a candidate, I need to be able to change my subscription plan at any time to select one that suits my needs and finances. 
+7. As a candidate, I need to be able to change my subscription plan at any time to select one that suits my needs and finances.
 
 ### Profile Info
 8. As a candidate, I need to be able to add my profile information (education, work, etc.) into the website for saving my information and generating new resumes.
@@ -23,15 +23,18 @@
 
 10. As a candidate, I want to have an option to auto-fill my profile by uploading a resume.
 
-### Create Resume
-11. As a candidate, I need to be able to paste a job description and have a resume tailored for that job with my current profile. 
+11. As a candidate, I want to have the option to upload my resume to fill out
+part of our profile.
 
-12. As a candidate, I need to be able to make changes easily to the generated resume to personalize it even further.
+### Create Resume
+12. As a candidate, I need to be able to paste a job description and have a resume tailored for that job with my current profile.
+
+13. As a candidate, I need to be able to make changes easily to the generated resume to personalize it even further.
 
 ### Resume Analysis
-13. As a candidate, I need to be able to see analysis on how my profile matches the job description. 
+15. As a candidate, I need to be able to see analysis on how my profile matches the job description.
 
-14. As a candidate, I need to be able to see areas of growth (with new skills) to improve my matching with the job.
+16. As a candidate, I need to be able to see areas of growth (with new skills) to improve my matching with the job.
 
 ### Resume saving
-15. As a candidate, I want to be able to save/download the resume to store locally and for uploading to jobs. 
+17. As a candidate, I want to be able to save/download the resume to store locally and for uploading to jobs. 
