@@ -10,3 +10,8 @@
 4. As a candidate, I need to be able to reset my password using my email address to regain access to my account in case I have forgotten my password. 
 
 5. As a candidate, I need to be able to change my password in order to keep my account updated and safe.
+
+### Subscription plan:
+6. As a candidate, I want to be able to choose a subscription plan in order to access premium features.
+
+7. As a candidate, I need to be able to change my subscription plan at any time to select one that suits my needs and finances. 
