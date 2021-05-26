@@ -27,3 +27,8 @@
 11. As a candidate, I need to be able to paste a job description and have a resume tailored for that job with my current profile. 
 
 12. As a candidate, I need to be able to make changes easily to the generated resume to personalize it even further.
+
+### Resume Analysis
+13. As a candidate, I need to be able to see analysis on how my profile matches the job description. 
+
+14. As a candidate, I need to be able to see areas of growth (with new skills) to improve my matching with the job.
