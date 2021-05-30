@@ -4,7 +4,7 @@ const path = require('path')
 const port = 8080
 
 const express = require('express')
-var router = express.Router();
+let router = express.Router();
 const app = express()
 
 app.use(express.static('public'))
