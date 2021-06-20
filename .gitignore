@@ -4,8 +4,11 @@
 # Python cache files
 **/**.pyc
 
+#Python virtual environment
+**/fastapi-env
+
 # Node modules
-node_modules
+node_modulesgi
 client/node_modules
 
 # Lock files
