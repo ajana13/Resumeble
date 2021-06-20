@@ -1,17 +1,70 @@
-const http = require('http')
-const server = http.createServer();
-const path = require('path')
-const port = 8080
+const express = require('express');
+const mongoose = require('mongoose');
+const passport = require('passport');
 
-const express = require('express')
-let router = express.Router();
-const app = express()
+const path = require('path');
+const multer = require('multer');
+require('dotenv').config({ path: path.resolve(__dirname, './config/.env') });
 
-app.use(express.static('public'))
+// eslint-disable-next-line no-unused-vars
+const auth = require('./routes/auth');
+const { useJwtStrategy } = require('./util/passport/index');
 
-http.createServer(function (req, res) {
-  res.write('Hello World!');
-  res.end();
-}).listen(port, () =>{
-  console.log(`App listening on port ${port}`)
+const app = express();
+const port = process.env.PORT || 5000;
+
+console.log(process.env.MONGO_URI)
+
+// DB Config
+const mongoURI = process.env.NODE_ENV
+    ? process.env.MONGO_URI
+    : process.env.DEV_MONGO_URI;
+
+// Connect to MongoDB
+mongoose
+    .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    // eslint-disable-next-line no-console
+    .then(() => console.log('MongoDB successfully connected'))
+    // eslint-disable-next-line no-console
+    .catch((err) => console.log(err));
+
+// Bodyparser middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+// Passport Middleware
+useJwtStrategy();
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(
+    require('express-session')({
+        secret: 'build',
+        resave: false,
+        saveUninitialized: false,
+    })
+);
+
+// Multer Middleware
+const multerMid = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+        fileSize: process.env.MAX_FILE_SIZE,
+    },
+});
+app.use(multerMid.single('file'));
+app.disable('x-powered-by');
+
+// Routes
+app.use('/auth', auth);
+app.use(express.static('client/build'));
+
+// Serve static assets (build folder) if in production
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+});
+
+app.listen(port, () => {
+    // eslint-disable-next-line no-console
+    console.log(`BUILD UMass server running on http://localhost:${port}`);
 });
