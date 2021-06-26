@@ -22,7 +22,7 @@ const Login = ({ auth, loginUser, history, errors }) => {
       password: password
     };
 
-    loginUser(userData, history);
+    loginUser(userData);
   };
 
   return (
@@ -95,7 +95,7 @@ const Login = ({ auth, loginUser, history, errors }) => {
         </div>
       </div>
   );
-}
+};
 
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
