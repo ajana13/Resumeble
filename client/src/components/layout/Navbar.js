@@ -19,17 +19,6 @@ import {  Link as RouterLink  } from "react-router-dom";
 
 import { logoutUser } from "../../redux/actions/authActions";
 
-const headersDataLogin = [
-    {
-        label: "Home",
-        href: "/dashboard",
-    },
-    {
-        label: "Logout",
-        href: "/logout",
-    },
-]
-
 const headersDataLogout = [
     {
         label: "Home",
@@ -45,22 +34,6 @@ const headersDataLogout = [
     },
 ]
 
-const headersData = [
-    {
-        label: "Home",
-        href: "/",
-    },
-    {
-        label: "Login",
-        href: "/login",
-    },
-    {
-        label: "Register",
-        href: "/register",
-    },
-]
-
-// className="justify-content-end"
 
 const useStyles = makeStyles(() => ({
     header: {
@@ -98,27 +71,27 @@ const useStyles = makeStyles(() => ({
 }));
 
 function Navbar({ auth, logoutUser }) {
-    const { header, logo, menuButton, toolbar, drawerContainer } = useStyles();
+    const {header, logo, menuButton, toolbar, drawerContainer} = useStyles();
 
     const [state, setState] = React.useState({
         mobileView: false,
         drawerOpen: false,
     });
 
-    const { mobileView, drawerOpen } = state;
+    const {mobileView, drawerOpen} = state;
 
     const onLogoutClick = e => {
         e.preventDefault();
         logoutUser();
     };
 
-    const { isAuthenticated } = auth;
+    const {isAuthenticated} = auth;
 
     React.useEffect(() => {
         const setResponsiveness = () => {
             return window.innerWidth < 900
-                ? setState((prevState) => ({ ...prevState, mobileView: true }))
-                : setState((prevState) => ({ ...prevState, mobileView: false }));
+                ? setState((prevState) => ({...prevState, mobileView: true}))
+                : setState((prevState) => ({...prevState, mobileView: false}));
         };
 
         setResponsiveness();
@@ -144,10 +117,10 @@ function Navbar({ auth, logoutUser }) {
 
     const displayMobile = () => {
         const handleDrawerOpen = () =>
-            setState((prevState) => ({ ...prevState, drawerOpen: true }));
+            setState((prevState) => ({...prevState, drawerOpen: true}));
 
         const handleDrawerClose = () =>
-            setState((prevState) => ({...prevState, drawerOpen: false }));
+            setState((prevState) => ({...prevState, drawerOpen: false}));
 
         return (
             <Toolbar>
@@ -159,7 +132,7 @@ function Navbar({ auth, logoutUser }) {
                         "aria-haspopup": "true",
                         onClick: handleDrawerOpen,
                     }}>
-                    <MenuIcon color="disabled"  />
+                    <MenuIcon color="disabled"/>
                 </IconButton>
                 <Drawer
                     {...{
@@ -175,21 +148,43 @@ function Navbar({ auth, logoutUser }) {
     };
 
     const getDrawerChoices = () => {
-        return headersData.map(({ label, href }) => {
-            return (
+        if (isAuthenticated) {
+            return <>
                 <Link
-                    {...{
-                        component: RouterLink,
-                        to: href,
+                    to="/dashboard"
+                    style={{
+                        textDecoration: "none",
                         color: "inherit",
-                        style: { textDecoration: "none" },
-                        key: label,
                     }}
-                >
-                    <MenuItem>{label}</MenuItem>
+                    className="col s5 brand-logo black-text">
+                    <MenuItem>Landing</MenuItem>
                 </Link>
-            );
-        });
+                <Link
+                    textDecoration="none"
+                    color="inherit"
+                    onClick={onLogoutClick}
+                    className={menuButton}
+                >
+                    <MenuItem>Logout</MenuItem>
+                </Link>
+            </>
+        } else {
+            return headersDataLogout.map(({label, href}) => {
+                return (
+                    <Link
+                        {...{
+                            component: RouterLink,
+                            to: href,
+                            color: "inherit",
+                            style: {textDecoration: "none"},
+                            key: label,
+                        }}
+                    >
+                        <MenuItem>{label}</MenuItem>
+                    </Link>
+                )
+            });
+        }
     };
 
     const Resumeblelogo = (
@@ -199,21 +194,39 @@ function Navbar({ auth, logoutUser }) {
     );
 
     const getMenuButtons = () => {
-        return headersData.map(({ label, href }) => {
-            return (
+        if(isAuthenticated) {
+            return <>
                 <Button
-                    {...{
-                        key: label,
-                        color: "inherit",
-                        to: href,
-                        component: RouterLink,
-                        className: menuButton
-                    }}
-                >
-                    {label}
+                    to="/dashboard"
+                    color="inherit"
+                    className={menuButton}>
+                    Landing
                 </Button>
-            );
-        });
+                <Button
+                    color="inherit"
+                    onClick={onLogoutClick}
+                    className={menuButton}
+                >
+                    Logout
+                </Button>
+            </>
+        } else {
+            return headersDataLogout.map(({label, href}) => {
+                return (
+                    <Button
+                        {...{
+                            key: label,
+                            color: "inherit",
+                            to: href,
+                            component: RouterLink,
+                            className: menuButton
+                        }}
+                    >
+                        {label}
+                    </Button>
+                );
+            });
+        }
     };
 
     return (
@@ -223,87 +236,6 @@ function Navbar({ auth, logoutUser }) {
             </AppBar>
         </header>
     );
-
-    /*
-    const onLogoutClick = e => {
-        e.preventDefault();
-        logoutUser();
-    };
-
-    const { isAuthenticated } = auth;
-
-    const loggedInNav = () => (
-        <div className="navbar-fixed">
-            <nav className="z-depth-0">
-                <div className="nav-wrapper white">
-                    <Link
-                        to="/dashboard"
-                        style={{
-                            fontFamily: "monospace"
-                        }}
-                        className="col s5 brand-logo black-text">
-                        <i className="material-icons">code</i>
-                        Landing
-                    </Link>
-                    <button
-                        style={{
-                            width: "150px",
-                            borderRadius: "3px",
-                            letterSpacing: "1.5px",
-                            marginTop: "1rem"
-                        }}
-                        onClick={onLogoutClick}
-                        className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                    >
-                        Logout
-                    </button>
-                </div>
-            </nav>
-        </div>
-    );
-
-    const loggedOutNav = () => (
-        <div className="navbar-fixed">
-            <nav className="z-depth-0">
-                <div className="nav-wrapper white">
-                    <Link
-                        to="/"
-                        style={{
-                            fontFamily: "monospace"
-                        }}
-                        className="col s5 brand-logo black-text">
-                        <i className="material-icons">code</i>
-                        Landing
-                    </Link>
-                    <Link
-                        to="/login"
-                        style={{
-                            fontFamily: "monospace"
-                        }}
-                        className="col s5 brand-logo black-text">
-                        <i className="material-icons">code</i>
-                        Login
-                    </Link>
-                    <Link
-                        to="/register"
-                        style={{
-                            fontFamily: "monospace"
-                        }}
-                        className="col s5 brand-logo black-text">
-                        <i className="material-icons">code</i>
-                        Register
-                    </Link>
-                </div>
-            </nav>
-        </div>
-    );
-
-    return (
-        <>
-            {isAuthenticated ? loggedInNav() : loggedOutNav()}
-        </>
-    );
-     */
 }
 
 Navbar.propTypes = {
