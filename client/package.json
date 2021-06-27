@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
-    "is-empty": "^1.2.0",
     "classnames": "^2.2.6",
+    "is-empty": "^1.2.0",
     "jwt-decode": "^2.2.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
