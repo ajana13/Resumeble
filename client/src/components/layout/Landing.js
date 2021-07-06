@@ -1,7 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-const Landing = () => {
+const Landing = ({ auth, history }) => {
+
+    if (auth.isAuthenticated) {
+        history.push('/dashboard');
+    }
+
     return (
       <div style={{ height: "75vh" }} className="container valign-wrapper">
         <div className="row">
@@ -46,4 +53,16 @@ const Landing = () => {
     );
 }
 
-export default Landing;
+Landing.propTypes = {
+    history: PropTypes.shape({
+        push: PropTypes.func.isRequired,
+    }).isRequired,
+    // eslint-disable-next-line react/forbid-prop-types
+    auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Landing);
