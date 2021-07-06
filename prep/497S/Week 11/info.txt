@@ -5,7 +5,7 @@ Reading
 Chapter 6 - Deployment (pages 103 - 130)
 
 AWS EducateURL
-As part of this course I want everyone to have a taste of deploying a scalable web application in the cloud. "AWS Educate is Amazon's global initiative to provide students comprehensive resources for building skills in the cloud. It is a no-cost curriculum providing access to content, training, pathways, AWS services, and the AWS Educate Job Board with employment opportunities. Join AWS Educate and receive up to $100 in AWS Promotional Credit with an AWS Educate Starter Account."
+As part of this course I want everyone to have a taste of deploying a scalable web application in the cloud. "AWS Educate is Amazon's global initiative to provide students comprehensive resources for building skills in the cloud. It is a no-cost curriculum providing access to content, training, pathways, AWS services, and the AWS Educate JobCard Board with employment opportunities. Join AWS Educate and receive up to $100 in AWS Promotional Credit with an AWS Educate Starter Account."
 
 By signing up for AWS Educate you get free credits to create EC2 instances (Unix VMs) in the cloud and be able to deploy your application in an EC2 instance. As part of this week I would like everyone to signup for an AWS Educate account. Follow the instructions to do this by clicking the "Join AWS Educate" button found by following this link.
 

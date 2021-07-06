@@ -160,6 +160,15 @@ function Navbar({ auth, logoutUser }) {
                     <MenuItem>Landing</MenuItem>
                 </Link>
                 <Link
+                    to="/profile"
+                    style={{
+                        textDecoration: "none",
+                        color: "inherit",
+                    }}
+                    className="col s5 brand-logo black-text">
+                    <MenuItem>Profile</MenuItem>
+                </Link>
+                <Link
                     textDecoration="none"
                     color="inherit"
                     onClick={onLogoutClick}
@@ -201,6 +210,12 @@ function Navbar({ auth, logoutUser }) {
                     color="inherit"
                     className={menuButton}>
                     Landing
+                </Button>
+                <Button
+                    to="/profile"
+                    color="inherit"
+                    className={menuButton}>
+                    Profile
                 </Button>
                 <Button
                     color="inherit"
