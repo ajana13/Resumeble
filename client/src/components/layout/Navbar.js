@@ -32,6 +32,10 @@ const headersDataLogout = [
         label: "Register",
         href: "/register",
     },
+    {
+        label: "About",
+        href: "/about",
+    },
 ]
 
 
