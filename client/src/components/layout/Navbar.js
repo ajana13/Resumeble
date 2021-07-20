@@ -14,6 +14,8 @@ import {
     Link,
     MenuItem,
 } from "@material-ui/core";
+import Dashboard from '../dashboard/Dashboard';
+import Profile from '../profile/Profile';
 import MenuIcon from "@material-ui/icons/Menu";
 import {  Link as RouterLink  } from "react-router-dom";
 
@@ -155,28 +157,30 @@ function Navbar({ auth, logoutUser }) {
         if (isAuthenticated) {
             return <>
                 <Link
-                    to="/dashboard"
-                    style={{
-                        textDecoration: "none",
+                    {...{
+                        component: RouterLink,
+                        to: "/dashboard",
                         color: "inherit",
-                    }}
-                    className="col s5 brand-logo black-text">
+                        style: {textDecoration: "none"},
+                        key: "dashboard",
+                    }}>
                     <MenuItem>Landing</MenuItem>
                 </Link>
                 <Link
-                    to="/profile"
-                    style={{
-                        textDecoration: "none",
+                    {...{
+                        component: RouterLink,
+                        to: "/profile",
                         color: "inherit",
-                    }}
-                    className="col s5 brand-logo black-text">
+                        style: {textDecoration: "none"},
+                        key: "profile",
+                    }}>
                     <MenuItem>Profile</MenuItem>
                 </Link>
                 <Link
                     textDecoration="none"
                     color="inherit"
                     onClick={onLogoutClick}
-                    className={menuButton}
+
                 >
                     <MenuItem>Logout</MenuItem>
                 </Link>
@@ -210,17 +214,25 @@ function Navbar({ auth, logoutUser }) {
         if(isAuthenticated) {
             return <>
                 <Button
-                    to="/dashboard"
-                    color="inherit"
-                    className={menuButton}>
-                    Landing
+                  {...{
+                    key: "dashboard",
+                    color: "inherit",
+                    to: "/dashboard",
+                    component: RouterLink,
+                    className: menuButton}}>
+                    Dashboard
                 </Button>
+                
                 <Button
-                    to="/profile"
-                    color="inherit"
-                    className={menuButton}>
+                    {...{
+                       key: "profile",
+                       color: "inherit",
+                       to: "/profile",
+                       component: RouterLink,
+                       className: menuButton }}>
                     Profile
                 </Button>
+              
                 <Button
                     color="inherit"
                     onClick={onLogoutClick}
