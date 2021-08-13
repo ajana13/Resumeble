@@ -171,7 +171,6 @@ const ProfileHeader = ({ auth }) => {
           <CreateIcon />
         </IconButton>
       </CardActions>
-     
     </Card>
 
 {/*code for the first dialogue box when opened*/}

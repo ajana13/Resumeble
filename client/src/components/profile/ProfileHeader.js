@@ -128,14 +128,14 @@ const ProfileHeader = ({ auth }) => {
        we display a button, the camera button that is shown when hovered allows the user to upload
        and image from their computer */}
 
-          <div 
-          style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginBottom: 20,
+        <div 
+        style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 20,
         }}>
-            <IconButton onMouseOver={() => setHover(true)}
+          <IconButton onMouseOver={() => setHover(true)}
       onMouseLeave={() => setHover(false)}>
             <Avatar alt="Remy Sharp" src= {profileImg} className={classes.large}  />
             {isHovered && (
@@ -158,10 +158,6 @@ const ProfileHeader = ({ auth }) => {
         </IconButton>
             </label>
         </Button>
-
-        
-        
-
 
       )}
             </IconButton>
@@ -205,16 +201,14 @@ const ProfileHeader = ({ auth }) => {
 {/* This is the code for the dialogue box pop-up */}
 
     <Dialog
-       open={open}
-       onClose={handleClose}
-       aria-labelledby="alert-dialog-title"
-       aria-describedby="alert-dialog-description"
-     >
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
        <DialogTitle id="alert-dialog-title">{"About Me"}</DialogTitle>
        <DialogContent>
          <DialogContentText id="alert-dialog-description">
-
-
 
          <TextField
           id="outlined-multiline-flexible"

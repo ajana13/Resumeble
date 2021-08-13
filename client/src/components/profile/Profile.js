@@ -1,8 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import ReactDOM from "react-dom"
+import { connect, ReactReduxContext } from 'react-redux'
 import Experience from './Experience'
 import Header from './ProfileHeader'
 import ExampleCard from './ExampleCard'
+import ContactInfoCard from './contactInfoCard'
 import PropTypes from "prop-types";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -31,20 +33,13 @@ const Profile = ({ auth }) => {
     return (
         <div className={classes.root} >
             
-  
-
-
   {/* 
   This is the code for the layout of the profile page, we use grid and box components to lay out
   the imported components into the page. The Grid component is made into a column style so that is why everything 
-  is seperated down. Also Grid items have a size of xs ={12} which means they take up the whole row.
-  
-  
-  
+  is seperated down. Also Grid items have a size of xs ={12} which means they take up the whole row.  
   */}
 
-
-    <Box  pt={12}>   
+  <Box  pt={12}>
       <Grid container spacing={3}
       direction="column"
       justifyContent="center"
@@ -58,18 +53,19 @@ const Profile = ({ auth }) => {
           <ExampleCard/>
         </Grid>
         <Grid item xs>
-          <Paper className={classes.paper}>Educaiton box coming soon</Paper>
+          {/*This is the Contact Info Card, currently the projects card that is imported at the top of this document*/}
+          <ContactInfoCard/>
+        </Grid>
+        <Grid item xs>
+          <Paper className={classes.paper}>Education box coming soon</Paper>
         </Grid>
       </Grid>
       </Box>
-
-
-
-      
     </div>
         
     );
 }
+
 
 Profile.propTypes = {
     auth: PropTypes.object.isRequired
