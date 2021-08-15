@@ -4,7 +4,7 @@ import { connect, ReactReduxContext } from 'react-redux'
 import Experience from './Experience'
 import Header from './ProfileHeader'
 import ExampleCard from './ExampleCard'
-import ContactInfoCard from './contactInfoCard'
+import ContactInfoCard from './ContactInfoCard'
 import PropTypes from "prop-types";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -42,7 +42,7 @@ const Profile = ({ auth }) => {
   <Box  pt={12}>
       <Grid container spacing={3}
       direction="column"
-      justifyContent="center"
+      
       alignItems="center">
         <Grid item xs = {12}>
         {/*This is the profile Header that is imported at the top of this document*/}
