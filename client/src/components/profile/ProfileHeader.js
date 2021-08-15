@@ -136,7 +136,7 @@ const ProfileHeader = ({ auth }) => {
         marginBottom: 20,
         }}>
           <IconButton onMouseOver={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}>
+            onMouseLeave={() => setHover(false)}>
             <Avatar alt="Remy Sharp" src= {profileImg} className={classes.large}  />
             {isHovered && (
 

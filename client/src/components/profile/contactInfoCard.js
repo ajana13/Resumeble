@@ -6,16 +6,15 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import CreateIcon from '@material-ui/icons/Create';
 import CardHeader from '@material-ui/core/CardHeader';
 import ContactInfoDiaglog from './dialogs/ContactInfo';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 800,
     maxWidth: 800,
   },
-  
   edit: {
     marginLeft: 'auto',
   },
@@ -32,19 +31,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ProfileHeader = ({ auth }) => {
-  const classes = useStyles();
+const ContactInfoCard = ({ auth }) => {
 
+const classes = useStyles();
 
 const [contactValue, setNewValue] = React.useState('Enter Info');
   
   return (
-    <div>
+    <>
     {/*code for project card that is displayed on profile*/}
     <Card className={classes.root}>
     <CardHeader
       title="Contact Information"
-      //subheader="September 14, 2016"
     />
     <CardContent>
       <Typography variant="body2" color="textSecondary" component="p">
@@ -53,17 +51,17 @@ const [contactValue, setNewValue] = React.useState('Enter Info');
     </CardContent>
     
     <CardActions disableSpacing>
-      <ContactInfoDiaglog className={classes.edit}>
-        <CreateIcon />
-      </ContactInfoDiaglog>
+      <IconButton className={classes.edit}>
+        <ContactInfoDiaglog />
+      </IconButton>
     </CardActions>
   </Card>
-  </div>
+  </>
   //Later I have to make it so when we press save we send the value to the backend, and move the onchange function
   );
 }
 
-ProfileHeader.propTypes = {
+ContactInfoCard.propTypes = {
     auth: PropTypes.object.isRequired
 };
 
@@ -73,4 +71,4 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-)(ProfileHeader);
+)(ContactInfoCard);

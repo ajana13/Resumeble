@@ -35,9 +35,8 @@ const useStyles = makeStyles((theme) => ({
     dialog: {
         margin: theme.spacing(1),
         maxWidth: 800,
-      },
-    })
-)
+    },
+}));
 
 const ContactInfoDialog = ({ auth }) => {
 
@@ -174,17 +173,14 @@ return(
 
     <div className="ContactInfoDialog">
 
-    <IconButton
-    className={classes.edit}
-    onClick={handleClickOpen}
-    >
+    <IconButton className={classes.edit} onClick={handleClickOpen} >
     <CreateIcon />
     </IconButton>
 
     <Dialog
-    open={open}
-    onClose={handleClose}
-    aria-labelledby="form-dialog-title"
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
     >
     <DialogTitle id="alert-dialog-title">
     {"Enter Your Contact"}
