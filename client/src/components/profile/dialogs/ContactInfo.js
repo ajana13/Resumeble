@@ -66,106 +66,111 @@ const ContactInfoDialog = ({ auth }) => {
 
 
     const handleChange = (event) => {
-    let idName = event.target.id
-    value[idName] = event.target.value
-
+        let idName = event.target.id
+        value[idName] = event.target.value
+        console.log("id: " + idName + " " + value[idName])
     };
     
-    const [contactValue, setNewValue] = React.useState('Enter Info');
+    const [contactValue, setContactValue] = React.useState('Enter Info');
     
     const ContactInfoForm = (value,disabled) => {
         let isDisabled = false;
         isDisabled = disabled;
 
         return(
-            React.createElement(
-                "div",
-                null,
-                <form className={classes.dialog} noValidate autoComplete="off">
+
+                <form className={classes.dialog} noValidate autoComplete="off" onChange={handleChange}>
                 <TextField
-                    id="outlined-basic" 
+                    id="firstName" 
                     disabled={ (disabled===true) ? isDisabled===true : false}
                     label="First Name" 
                     variant="outlined"
                     className={classes.form}
                     value={value.firstName}
-
+                    
                     />
                 <TextField
-                    id="outlined-basic" 
+                    id="lastName" 
                     label="Last Name" 
                     disabled={ (disabled===true) ? isDisabled===true : false}
                     variant="outlined" 
                     className={classes.form}
-                    value={value.lastName}  
+                    value={value.lastName}
+
                     />
                     <br/>
                 <TextField
-                    id="outlined-basic" 
+                    id="address" 
                     label="Address" 
                     disabled={ (disabled===true) ? isDisabled===true : false}
                     variant="outlined" 
                     className={classes.form}
-                    value={value.address}  
+                    value={value.address}
+                    
                 />
                 <br/>
                 <TextField
-                    id="outlined-basic" 
+                    id="secondAddress" 
                     label="Second Address" 
                     disabled={ (disabled===true) ? isDisabled===true : false}
                     variant="outlined" 
                     className={classes.form}
-                    value={value.secondAddress}  
+                    value={value.secondAddress}
+                    
                 />
                 <br/>
                 <TextField
-                    id="outlined-basic" 
+                    id="city" 
                     label="City" 
                     disabled={ (disabled===true) ? isDisabled===true : false}
                     variant="outlined" 
                     className={classes.form}
-                    value={value.city}  
+                    value={value.city}
+                    
                 />
                 <TextField
-                    id="outlined-basic" 
+                    id="state" 
                     label="State" 
                     disabled={ (disabled===true) ? isDisabled===true : false}
                     variant="outlined" 
                     className={classes.form}
-                    value={value.state}  
+                    value={value.state}
+                    
                 />
                 <TextField
-                    id="outlined-basic" 
+                    id="zipCode" 
                     label="Zip Code" 
                     disabled={ (disabled===true) ? isDisabled===true : false}
                     variant="outlined" 
                     className={classes.form}
-                    value={value.zipCode}  
+                    value={value.zipCode} 
+                    
                 />
                 <TextField
-                    id="outlined-basic"
+                    id="email"
                     label="Email" 
                     disabled={ (disabled===true) ? isDisabled===true : false}
                     variant="outlined" 
                     className={classes.form}
-                    value={value.email}  
+                    value={value.email}
+                   
                 />
                 <TextField
-                    id="outlined-basic" 
+                    id="primaryPhone" 
                     label="Primary Phone" 
                     disabled={ (disabled===true) ? isDisabled===true : false}
                     variant="outlined" 
                     className={classes.form}
                     value={value.primaryPhone}
+                    
                 />
                 </form>
             )
-        )
-    }
+     }
 
     //saves the value written in multiline to the card on profile
     const saveValue = (event) => {
-        setNewValue(ContactInfoForm(value, true));
+        setContactValue(ContactInfoForm(value, true));
         setOpen(false);
     };
     
@@ -192,12 +197,10 @@ return(
             {/*Here we map the array into note objects inside the dialogue box for each note object in the array*/}
             <Grid container spacing={3}>
                 <ContactInfoForm />
-
             </Grid>
         </Container>
     </DialogContentText>
     </DialogContent>
-
     <DialogActions>
     <Button onClick={handleClose} color="primary">
         Cancel

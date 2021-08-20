@@ -46,7 +46,7 @@ const [contactValue, setNewValue] = React.useState('Enter Info');
     />
     <CardContent>
       <Typography variant="body2" color="textSecondary" component="p">
-        {ContactInfoDiaglog.ContactInfoForm}
+        {contactValue}
       </Typography>
     </CardContent>
     
