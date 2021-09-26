@@ -33,32 +33,40 @@ const useStyles = makeStyles((theme) => ({
 
 const ContactInfoCard = ({ auth }) => {
 
-const classes = useStyles();
+  const classes = useStyles();
 
-const [contactValue, setNewValue] = React.useState('Enter Info');
+  const [contactValues, setContactValues] = React.useState({
+    firstName: '',
+    lastName: '',
+    address: '',
+    secondAddress: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    email: '',
+    primaryPhone: '',
+});
   
-  return (
-    <>
-    {/*code for project card that is displayed on profile*/}
-    <Card className={classes.root}>
-    <CardHeader
-      title="Contact Information"
-    />
-    <CardContent>
-      <Typography variant="body2" color="textSecondary" component="p">
-        {contactValue}
-      </Typography>
-    </CardContent>
-    
-    <CardActions disableSpacing>
-      <IconButton className={classes.edit}>
-        <ContactInfoDiaglog />
-      </IconButton>
-    </CardActions>
-  </Card>
-  </>
-  //Later I have to make it so when we press save we send the value to the backend, and move the onchange function
-  );
+    return (
+      <>
+      {/*code for project card that is displayed on profile*/}
+      <Card className={classes.root}>
+      <CardHeader
+        title="Contact Information"
+      />
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        <IconButton className={classes.edit}>
+          <ContactInfoDiaglog {...contactValues}/>
+        </IconButton>
+      </CardActions>
+    </Card>
+    </>
+    //Later I have to make it so when we press save we send the value to the backend, and move the onchange function
+    );
 }
 
 ContactInfoCard.propTypes = {

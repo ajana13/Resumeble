@@ -38,11 +38,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ContactInfoDialog = ({ auth }) => {
+const ContactInfoDialog = (props, disabled) => {
 
     const classes = useStyles();
 
-    const value = {
+    const [open, setOpen] = React.useState(false);
+
+    const [contactValues, setContactValues] = React.useState({
         firstName: '',
         lastName: '',
         address: '',
@@ -52,10 +54,11 @@ const ContactInfoDialog = ({ auth }) => {
         zipCode: '',
         email: '',
         primaryPhone: '',
-    }
+    })
+    
 
-    const [open, setOpen] = React.useState(false);
-
+    var values = {...contactValues};
+    
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -64,118 +67,20 @@ const ContactInfoDialog = ({ auth }) => {
         setOpen(false);
     };
 
-
     const handleChange = (event) => {
         let idName = event.target.id
-        value[idName] = event.target.value
-        console.log("id: " + idName + " " + value[idName])
+        values[idName] = event.target.value
+
+        //console.log("id: " + idName + ": " + values[idName])
     };
     
-    const [contactValue, setContactValue] = React.useState('Enter Info');
-    
-    const ContactInfoForm = (value,disabled) => {
-        let isDisabled = false;
-        isDisabled = disabled;
-
-        return(
-
-                <form className={classes.dialog} noValidate autoComplete="off" onChange={handleChange}>
-                <TextField
-                    id="firstName" 
-                    disabled={ (disabled===true) ? isDisabled===true : false}
-                    label="First Name" 
-                    variant="outlined"
-                    className={classes.form}
-                    value={value.firstName}
-                    
-                    />
-                <TextField
-                    id="lastName" 
-                    label="Last Name" 
-                    disabled={ (disabled===true) ? isDisabled===true : false}
-                    variant="outlined" 
-                    className={classes.form}
-                    value={value.lastName}
-
-                    />
-                    <br/>
-                <TextField
-                    id="address" 
-                    label="Address" 
-                    disabled={ (disabled===true) ? isDisabled===true : false}
-                    variant="outlined" 
-                    className={classes.form}
-                    value={value.address}
-                    
-                />
-                <br/>
-                <TextField
-                    id="secondAddress" 
-                    label="Second Address" 
-                    disabled={ (disabled===true) ? isDisabled===true : false}
-                    variant="outlined" 
-                    className={classes.form}
-                    value={value.secondAddress}
-                    
-                />
-                <br/>
-                <TextField
-                    id="city" 
-                    label="City" 
-                    disabled={ (disabled===true) ? isDisabled===true : false}
-                    variant="outlined" 
-                    className={classes.form}
-                    value={value.city}
-                    
-                />
-                <TextField
-                    id="state" 
-                    label="State" 
-                    disabled={ (disabled===true) ? isDisabled===true : false}
-                    variant="outlined" 
-                    className={classes.form}
-                    value={value.state}
-                    
-                />
-                <TextField
-                    id="zipCode" 
-                    label="Zip Code" 
-                    disabled={ (disabled===true) ? isDisabled===true : false}
-                    variant="outlined" 
-                    className={classes.form}
-                    value={value.zipCode} 
-                    
-                />
-                <TextField
-                    id="email"
-                    label="Email" 
-                    disabled={ (disabled===true) ? isDisabled===true : false}
-                    variant="outlined" 
-                    className={classes.form}
-                    value={value.email}
-                   
-                />
-                <TextField
-                    id="primaryPhone" 
-                    label="Primary Phone" 
-                    disabled={ (disabled===true) ? isDisabled===true : false}
-                    variant="outlined" 
-                    className={classes.form}
-                    value={value.primaryPhone}
-                    
-                />
-                </form>
-            )
-     }
-
     //saves the value written in multiline to the card on profile
     const saveValue = (event) => {
-        setContactValue(ContactInfoForm(value, true));
+        setContactValues(values);
         setOpen(false);
     };
-    
-return(
 
+return(
     <div className="ContactInfoDialog">
 
     <IconButton className={classes.edit} onClick={handleClickOpen} >
@@ -190,13 +95,86 @@ return(
     <DialogTitle id="alert-dialog-title">
     {"Enter Your Contact"}
     </DialogTitle>
-
     <DialogContent>
         <DialogContentText id="alert-dialog-description">
             <Container>
             {/*Here we map the array into note objects inside the dialogue box for each note object in the array*/}
             <Grid container spacing={3}>
-                <ContactInfoForm />
+            <form className={classes.dialog} noValidate autoComplete="off" onChange={handleChange}>
+                <TextField
+                    id="firstName" 
+                    label="First Name" 
+                    variant="outlined"
+                    className={classes.form}
+                    defaultValue={values.firstName}
+
+                    />
+                <TextField
+                    id="lastName" 
+                    label="Last Name" 
+                    variant="outlined" 
+                    className={classes.form}
+                    defaultValue={values.lastName}
+                    />
+                    <br/>
+                <TextField
+                    id="address" 
+                    label="Address" 
+                    variant="outlined" 
+                    className={classes.form}
+                    defaultValue={values.address}
+                    
+                />
+                <br/>
+                <TextField
+                    id="secondAddress" 
+                    label="Second Address" 
+                    variant="outlined" 
+                    className={classes.form}
+                    defaultValue={values.secondAddress}
+                    
+                />
+                <br/>
+                <TextField
+                    id="city" 
+                    label="City" 
+                    variant="outlined" 
+                    className={classes.form}
+                    defaultValue={values.city}
+                    
+                />
+                <TextField
+                    id="state" 
+                    label="State" 
+                    variant="outlined" 
+                    className={classes.form}
+                    defaultValue={values.state}
+                    
+                />
+                <TextField
+                    id="zipCode" 
+                    label="Zip Code" 
+                    variant="outlined" 
+                    className={classes.form}
+                    defaultValue={values.zipCode} 
+                    
+                />
+                <TextField
+                    id="email"
+                    label="Email" 
+                    variant="outlined" 
+                    className={classes.form}
+                    defaultValue={values.email}
+                   
+                />
+                <TextField
+                    id="primaryPhone" 
+                    label="Primary Phone" 
+                    variant="outlined" 
+                    className={classes.form}
+                    defaultValue={values.primaryPhone}
+                />
+                </form>
             </Grid>
         </Container>
     </DialogContentText>
