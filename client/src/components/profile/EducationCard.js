@@ -47,7 +47,7 @@ const EducationCard = ({ auth }) => {
       {/*code for project card that is displayed on profile*/}
       <Card className={classes.root}>
       <CardHeader
-        title="Education Information"
+        title="Education"
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
