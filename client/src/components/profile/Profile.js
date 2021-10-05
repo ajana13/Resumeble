@@ -1,10 +1,11 @@
 import React from 'react';
-import ReactDOM from "react-dom"
-import { connect, ReactReduxContext } from 'react-redux'
-import Experience from './Experience'
-import Header from './ProfileHeader'
-import ExampleCard from './ExampleCard'
-import ContactInfoCard from './ContactInfoCard'
+import ReactDOM from "react-dom";
+import { connect, ReactReduxContext } from 'react-redux';
+import Experience from './Experience';
+import Header from './ProfileHeader';
+import ExampleCard from './ExampleCard';
+import ContactInfoCard from './ContactInfoCard';
+import EducationCard from './EducationCard';
 import PropTypes from "prop-types";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -57,7 +58,12 @@ const Profile = ({ auth }) => {
           <ContactInfoCard/>
         </Grid>
         <Grid item xs>
-          <Paper className={classes.paper}>Education box coming soon</Paper>
+          {/*This is the Contact Info Card, currently the projects card that is imported at the top of this document*/}
+          <EducationCard/>
+        </Grid>
+
+        <Grid item xs>
+          <Paper className={classes.paper}>Work History box coming soon</Paper>
         </Grid>
       </Grid>
       </Box>
