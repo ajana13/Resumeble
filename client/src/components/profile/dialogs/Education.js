@@ -99,8 +99,13 @@ return(
                     id="education" 
                     label="Education" 
                     variant="outlined"
-                    className={classes.form}
                     defaultValue={values.education}
+                    className={classes.form}
+                    inputProps={{
+                        style: {
+                          padding: 10
+                        }
+                     }}
                     />
                     <br/>
                 <TextField
@@ -109,6 +114,11 @@ return(
                     variant="outlined" 
                     className={classes.form}
                     defaultValue={values.school}
+                    inputProps={{
+                        style: {
+                          padding: 10
+                        }
+                     }}
                     />
                     <br/>
                 <TextField
@@ -117,7 +127,11 @@ return(
                     variant="outlined" 
                     className={classes.form}
                     defaultValue={values.dateStart}
-                    
+                    inputProps={{
+                        style: {
+                          padding: 10
+                        }
+                     }}
                 />
                 <br/>
                 <TextField
@@ -126,6 +140,11 @@ return(
                     variant="outlined" 
                     className={classes.form}
                     defaultValue={values.dateEnd}
+                    inputProps={{
+                        style: {
+                          padding: 10
+                        }
+                     }}
                 />
                 <br/>
                 </form>
