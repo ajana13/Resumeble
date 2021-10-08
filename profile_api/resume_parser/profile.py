@@ -7,3 +7,6 @@ from spacy.matcher import Matcher
 class Profile(BaseModel):
     nlp = spacy.load('en_core_web_sm')
     matcher = Matcher(nlp.vocab)
+    profile_usage = {
+        'name': None
+    }
