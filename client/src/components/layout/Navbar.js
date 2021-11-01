@@ -44,7 +44,7 @@ const headersDataLogout = [
 const useStyles = makeStyles(() => ({
     header: {
         // backgroundColor: "#400CCC",
-        background: 'transparent',
+        background: 'white',
         boxShadow: 'none',
         paddingRight: "79px",
         paddingLeft: "118px",
