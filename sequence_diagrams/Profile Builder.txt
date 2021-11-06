@@ -1,0 +1,18 @@
+title Profile Builder
+User->Landing Page:Login to page
+Landing Page->Profile Builder:Manage Profile
+Profile Builder->Profile Builder:Add/Edit Profile
+Profile Builder->Profile Builder:Save/Update Profile
+Profile Builder->Profile Builder:List/Delete Profile
+Landing Page->Skills:Manage Skill Details
+Projects->Projects:Add/Edit Projects
+Projects->Projects:Save/Update Projects
+Projects->Projects:List/Delete Projects
+Skills->Skills:Add/Edit Skills
+Skills->Skills:Save/Update Skills
+Skills->Skills:List/Delete Skills
+Landing Page->Work Experience:Manage Work Experience
+Landing Page->Projects:Manage Projects
+Work Experience->Work Experience:Add/Edit Work Experience
+Work Experience->Work Experience:Save/Update Work Experience
+Work Experience->Work Experience:List/Delete Work Experience

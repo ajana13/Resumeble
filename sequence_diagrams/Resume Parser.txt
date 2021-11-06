@@ -1,0 +1,19 @@
+title Resume Parser
+User->Resume Processor:Parse Resume
+Resume Processor->Profile:Manage Profile Model
+Profile->Profile:Update Profile
+Resume Processor->Work Experience Parser: Parse for work experience
+Resume Processor->Personal Information Parser: Parse for personal information
+Resume Processor->Awards Parser: Parse for awards/achievements
+Resume Processor->Education Parser: Parse for education
+Resume Processor->Courses Parser: Parse for courses taken
+Resume Processor->Skills Parser: Parse for skills
+Resume Processor->Projects Parser: Parse for projects
+Profile<--Work Experience Parser: Parse for work experience
+Profile<--Personal Information Parser: Parse for personal information
+Profile<--Awards Parser: Parse for awards/achievements
+Profile<--Education Parser: Parse for education
+Profile<--Courses Parser: Parse for courses taken
+Profile<--Skills Parser: Parse for skills
+Profile<--Projects Parser: Parse for projects
+User<--Profile: Return json data for user's profile
