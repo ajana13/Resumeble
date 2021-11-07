@@ -32,6 +32,17 @@ services:
       - ./:/usr/src/app
     ports:
       - "5002:5000"
+  resume_parser:
+    build:
+      context: resume_parser
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    links:
+      - mongodb_container
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - "5003:5000"
   nginx:
     image: nginx:alpine
     ports:
@@ -42,5 +53,6 @@ services:
     depends_on:
       - client
       - auth
+      - resume_parser
 volumes:
   mongodb_data_container:
