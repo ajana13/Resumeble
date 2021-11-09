@@ -13,8 +13,6 @@ const { useJwtStrategy } = require('./util/passport/index');
 const app = express();
 const port = process.env.PORT || 5000;
 
-console.log(process.env.MONGO_URI)
-
 // DB Config
 const mongoURI = process.env.NODE_ENV
     ? process.env.MONGO_URI
