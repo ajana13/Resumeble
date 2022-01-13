@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-
+import EducationCardMulti from './EducationCardMulti'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -60,6 +60,10 @@ const Profile = ({ auth }) => {
         <Grid item xs>
           {/*This is the Contact Info Card, currently the projects card that is imported at the top of this document*/}
           <EducationCard/>
+        </Grid>
+        <Grid item xs>
+          {/*This is the Contact Info Card, currently the projects card that is imported at the top of this document*/}
+          <EducationCardMulti/>
         </Grid>
 
         <Grid item xs>
