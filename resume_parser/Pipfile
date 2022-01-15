@@ -12,6 +12,12 @@ requests = "*"
 flask-limiter = "*"
 python-dotenv = "*"
 dnspython = "*"
+pyspark = "*"
+pandas = "*"
+nltk = "*"
+spacy = "*"
+docx2txt = "*"
+pdfminer = "*"
 
 [dev-packages]
 

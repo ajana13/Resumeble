@@ -10,6 +10,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import EducationDialog from './dialogs/Education';
 import IconButton from '@material-ui/core/IconButton';
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 800,

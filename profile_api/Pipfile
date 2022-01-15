@@ -4,19 +4,16 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-fastapi = "*"
-typing = "*"
-pydantic = "*"
-uvicorn = "*"
-httpx = "*"
-pyspark = "*"
-pandas = "*"
-nltk = "*"
-spacy = "*"
-docx2txt = "*"
-pdfminer = "*"
+flask = "*"
+flask-pymongo = "*"
+jsonify = "*"
+flask-restful = "*"
+requests = "*"
+flask-limiter = "*"
+python-dotenv = "*"
+dnspython = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.8"
+python_version = "3.7"
