@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-// const config = require("config");
+//const config = require("config");
 // const defaultAvatar = config.get("defaultAvatar");
 // const defaultBackgroundMedia = config.get("defaultBackgroundMedia");
 
@@ -185,4 +185,4 @@ ProfileSchema.index({
   "experience.company": "text"
 });
 
-module.exports = mongoose.model("profile", ProfileSchema);
+module.exports = Profile = mongoose.model("profiles", ProfileSchema);
