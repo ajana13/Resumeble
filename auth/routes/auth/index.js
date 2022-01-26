@@ -2,6 +2,7 @@ const express = require('express');
 
 // Feature related route imports
 const login = require('./login');
+const register = require('./register');
 
 const router = express.Router();
 
