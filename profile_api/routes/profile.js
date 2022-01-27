@@ -17,7 +17,7 @@ router.get('/getProfile', async (req,res) => {
         try {
             // let user = await Profile.findById('61f0b6aac0cd2758d8ba6c0b')
           let user = await Profile.findOne({
-            name: "Nam Phan",
+            _id: "61f0b6aac0cd2758d8ba6c0b",
           });
           if (user) {
             res.status(200).json({
