@@ -6,8 +6,7 @@ const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../config/.env') });
 
 const Profile = require('../models/Profile');
-
-
+const User = require('../models/User');
 
 // const User = require('../models/ContactInfo');
 
@@ -16,9 +15,9 @@ const Profile = require('../models/Profile');
 router.get('/getProfile', async (req,res) => {
         try {
             // let user = await Profile.findById('61f0b6aac0cd2758d8ba6c0b')
-          let user = await Profile.findOne({
-            _id: "61f0b6aac0cd2758d8ba6c0b",
-          });
+            let user = await User.findOne({
+              email: "quynhthoa1972@gmail.com"
+            });
           if (user) {
             res.status(200).json({
               status: 200,
