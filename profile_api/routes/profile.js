@@ -13,15 +13,17 @@ const User = require('../models/User');
 router.get('/getProfile/:id', async (req,res) => {
   try {
     let user = await User.findById(req.params.id);
-    if (user) {
+    let profileID = user.profileID;
+    let profile = await Profile.findById(profileID);
+    if (profile) {
       res.status(200).json({
         status: 200,
-        data: user,
+        data: profile,
       });
     }
     res.status(400).json({
       status: 400,
-      message: "No user found",
+      message: "No profile found",
     });
   } catch (err) {
     res.status(400).json({
