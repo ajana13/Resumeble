@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 //const config = require("config");
-// const defaultAvatar = config.get("defaultAvatar");
-// const defaultBackgroundMedia = config.get("defaultBackgroundMedia");
+//const defaultAvatar = config.get("defaultAvatar");
+//const defaultBackgroundMedia = config.get("defaultBackgroundMedia");
 
 const ProfileSchema = new mongoose.Schema({
   user: {
-    type: Schema.Types.ObjectId,
+    // type: Schema.Types.ObjectId,
+    type: String,
     index: true
   },
   name: {
@@ -20,11 +21,10 @@ const ProfileSchema = new mongoose.Schema({
   },
   location: {
     type: String,
-    required: true
+    //required: true
   },
   status: {
     type: String,
-    required: true
   },
   skills: {
     type: [String]
@@ -39,18 +39,18 @@ const ProfileSchema = new mongoose.Schema({
     {
       title: {
         type: String,
-        required: true
+        // required: true
       },
       company: {
         type: String,
-        required: true
+        // required: true
       },
       location: {
         type: String
       },
       from: {
         type: Date,
-        required: true
+        // required: true
       },
       to: {
         type: Date
@@ -68,19 +68,19 @@ const ProfileSchema = new mongoose.Schema({
     {
       school: {
         type: String,
-        required: true
+        // required: true
       },
       degree: {
         type: String,
-        required: true
+        //required: true
       },
       fieldofstudy: {
         type: String,
-        required: true
+        //required: true
       },
       from: {
         type: Date,
-        required: true
+        //required: true
       },
       to: {
         type: Date
