@@ -8,52 +8,106 @@ require('dotenv').config({ path: path.resolve(__dirname, '../config/.env') });
 const Profile = require('../models/Profile');
 const User = require('../models/User');
 
-// const User = require('../models/ContactInfo');
-
-//get whole profile object
-//GET Route: http://localhost:3001/api/profile/getProfile
-router.get('/getProfile', async (req,res) => {
-        try {
-            // let user = await Profile.findById('61f0b6aac0cd2758d8ba6c0b')
-            let user = await User.findOne({
-              email: "quynhthoa1972@gmail.com"
-            });
-          if (user) {
-            res.status(200).json({
-              status: 200,
-              data: user,
-            });
-          }
-          res.status(400).json({
-            status: 400,
-            message: "No user found",
-          });
-        } catch (err) {
-          res.status(400).json({
-            status: 400,
-            message: err.message,
-          });
-        }
-
-
-    // const user =  await Profile.findById('61f0b6aac0cd2758d8ba6c0b', (error, err) => {
-    //     console.log(error, err)
-    // })
-    //  res.json({message: user.name})
-
-    // User.findOne({ id: '61f0b6aac0cd2758d8ba6c0b' }).then((user) => {
-    //     // Check if user exists
-    //     return res.send(user.id)
-    // })
-
-    // res.send({profile:profile})
-
+// @desc: GET delete profile 
+// @route: http://localhost:3001/api/profile/getProfile/userID
+router.get('/getProfile/:id', async (req,res) => {
+  try {
+      // let user = await Profile.findById('61f0b6aac0cd2758d8ba6c0b')
+      // let user = await User.findOne({
+      //   email: "quynhthoa1972@gmail.com"
+      // });
+    let user = await User.findById(req.params.id);
+    if (user) {
+      res.status(200).json({
+        status: 200,
+        data: user,
+      });
+    }
+    res.status(400).json({
+      status: 400,
+      message: "No user found",
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
 })
 
-//POST Route: http://localhost:3001/api/profile/saveProfile
-router.post('/saveProfile', (req,res) => {
-    res.json({message: "Saving the profile!!"});
-    // User.findOneAndDelete({})
+
+// @desc: POST create profile
+// @route: http://localhost:3001/api/profile/createProfile/userID
+router.post('/createProfile/:id', async (req,res) => {
+  try {
+      // let user = await Profile.findById('61f0b6aac0cd2758d8ba6c0b')
+      let profile = await Profile.insertOne(req.body);
+    if (profile) {
+      res.status(200).json({
+        status: 200,
+        data: profile,
+      });
+    }
+    res.status(400).json({
+      status: 400,
+      message: "No user found",
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+})
+
+// @desc: POST update profile 
+// @route: http://localhost:3001/api/profile/saveProfile
+router.put('/saveProfile', async (req,res) => {
+  try {
+      // let user = await Profile.findById('61f0b6aac0cd2758d8ba6c0b')
+      let user = await User.findOne({
+        email: "quynhthoa1972@gmail.com"
+      });
+    if (user) {
+      res.status(200).json({
+        status: 200,
+        data: user,
+      });
+    }
+    res.status(400).json({
+      status: 400,
+      message: "No user found",
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+})
+
+// @desc: POST delete profile 
+// @route: http://localhost:3001/api/profile/deleteProfile
+router.delete('/deleteProfile/:id', async (req,res) => {
+  try {
+      // let user = await Profile.findById('61f0b6aac0cd2758d8ba6c0b')
+      let user = await User.findByID(req.params.id);
+    if (user) {
+      res.status(200).json({
+        status: 200,
+        data: user,
+      });
+    }
+    res.status(400).json({
+      status: 400,
+      message: "No user found",
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
 })
 // router.get('/test', (req, res) => {
 //     res.json({message: "Hello!"});
