@@ -12,10 +12,6 @@ const User = require('../models/User');
 // @route: http://localhost:3001/api/profile/getProfile/userID
 router.get('/getProfile/:id', async (req,res) => {
   try {
-      // let user = await Profile.findById('61f0b6aac0cd2758d8ba6c0b')
-      // let user = await User.findOne({
-      //   email: "quynhthoa1972@gmail.com"
-      // });
     let user = await User.findById(req.params.id);
     if (user) {
       res.status(200).json({
@@ -38,9 +34,9 @@ router.get('/getProfile/:id', async (req,res) => {
 
 // @desc: POST create profile
 // @route: http://localhost:3001/api/profile/createProfile/userID
+// test user: 61f0b6aac0cd2758d8ba6c0b
 router.post('/createProfile/:id', async (req,res) => {
   try {
-      // let user = await Profile.findById('61f0b6aac0cd2758d8ba6c0b')
       let profile = await Profile.insertOne(req.body);
     if (profile) {
       res.status(200).json({
