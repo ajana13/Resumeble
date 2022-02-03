@@ -12,11 +12,14 @@ Development with nodmon:
 
 # Routes
 
-Create
+Update or Create if profile doesn't exist
+    Request: POST
+    Route: http://localhost:3001/api/profile/createProfile/userID
 
-Read
-`http://localhost:3001/api/routes/getProfile/userID`
+Read Profile
+    Request: GET 
+    Route: http://localhost:3001/api/routes/getProfile/userID
 
-Update
-
-Delete
+Delete Profile
+    Request: DELETE
+    Route: http://localhost:3001/api/routes/deleteProfile/userID

@@ -117,7 +117,6 @@ router.put('/saveProfile', async (req,res) => {
 // @route: http://localhost:3001/api/routes/deleteProfile
 router.delete('/deleteProfile/:userid', async (req,res) => {
   try {
-    // let user = await Profile.findById('61f0b6aac0cd2758d8ba6c0b')
     let user = await User.findById(req.params.userid);
 
     const profile = await Profile.findOneAndDelete(
@@ -129,8 +128,5 @@ router.delete('/deleteProfile/:userid', async (req,res) => {
     res.status(500).send("Server Error");
   }
 })
-// router.get('/test', (req, res) => {
-//     res.json({message: "Hello!"});
-// })
 
 module.exports = router;
