@@ -72,39 +72,58 @@ router.post('/test/:userid', async (req,res) => {
 // test user: http://localhost:3001/api/profile/createProfile/61f0b6aac0cd2758d8ba6c0b
 router.post('/createProfile/:userid', async (req,res) => {
 try {
-    //perform validation here
-
-    //if validation is successful
-
     let user = await User.findById(req.params.userid);
 
-    const profileFields = {
-        name: "Your Name",
-        location: "Your Location",
-        about: "Your About",
-        // skills: Array.isArray(skills)
-        //   ? skills
-        //   : skills.length === 0 ? [] : skills.split(",").map((skill) => skill.trim()),
-        // status:req.body.status,
-    };
+    if (user) {
+      try {
+        const profileFields = {
+          name: "Your Name",
+          location: "Your Location",
+          about: "Your About",
+          // skills: Array.isArray(skills)
+          //   ? skills
+          //   : skills.length === 0 ? [] : skills.split(",").map((skill) => skill.trim()),
+          // status:req.body.status,
+      };
+  
+        // Using upsert option (creates new doc if no match is found):
+        const profile = await Profile.findOneAndUpdate(
+          {userID: user.id},
+          {$set: profileFields},
+          {new: true, upsert: true, setDefaultsOnInsert: true}
+        ); //.lean();
+        
+        user.profileID = profile.id;
+        await user.save();
 
-      // Using upsert option (creates new doc if no match is found):
-      const profile = await Profile.findOneAndUpdate(
-        {userID: user.id},
-        {$set: profileFields},
-        {new: true, upsert: true, setDefaultsOnInsert: true}
-      ); //.lean();
-      
-      user.profileID = profile.id;
-      await user.save();
-
-      res.json(profile);
-
-    //   clearCache(`profile:${req.user.id}`);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send("Server Error");
+        if (profile) {
+          res.status(200).json({
+            status: 200,
+            data: profile,
+          });
+        }
+        res.status(400).json({
+          status: 400,
+          message: "No profile found",
+        });
+      } catch (err) {
+        res.status(400).json({
+          status: 400,
+          message: err.message,
+        });
+      }
     }
+    res.status(400).json({
+      status: 400,
+      message: "No user found",
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+
 })
 
 // @desc: POST update profile 
@@ -118,14 +137,38 @@ router.put('/saveProfile', async (req,res) => {
 router.delete('/deleteProfile/:userid', async (req,res) => {
   try {
     let user = await User.findById(req.params.userid);
-
-    const profile = await Profile.findOneAndDelete(
-      {userID: user.id}
-    ); //.lean();
-
+    if (user) {
+      try {
+        const profile = await Profile.findOneAndDelete(
+          {userID: user.id}
+        ); //.lean();
+  
+        if (profile) {
+          res.status(200).json({
+            status: 200,
+            data: profile,
+          });
+        }
+        res.status(400).json({
+          status: 400,
+          message: "No profile found",
+        });
+      } catch (err) {
+        res.status(400).json({
+          status: 400,
+          message: err.message,
+        });
+      }
+    }
+    res.status(400).json({
+      status: 400,
+      message: "No user found",
+    });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
   }
 })
 
