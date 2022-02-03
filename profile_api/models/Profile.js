@@ -5,10 +5,10 @@ const Schema = mongoose.Schema;
 //const defaultBackgroundMedia = config.get("defaultBackgroundMedia");
 
 const ProfileSchema = new mongoose.Schema({
-  user: {
+  userID: {
     // type: Schema.Types.ObjectId,
     type: String,
-    index: true
+    // index: true
   },
   name: {
     type: String
