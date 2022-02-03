@@ -107,7 +107,11 @@ return(
                     variant="outlined"
                     className={classes.form}
                     defaultValue={values.firstName}
-
+                    inputProps={{
+                        style: {
+                          padding: 10
+                        }
+                     }}
                     />
                 <TextField
                     id="lastName" 
@@ -115,6 +119,11 @@ return(
                     variant="outlined" 
                     className={classes.form}
                     defaultValue={values.lastName}
+                    inputProps={{
+                        style: {
+                          padding: 10
+                        }
+                     }}
                     />
                     <br/>
                 <TextField
@@ -123,7 +132,11 @@ return(
                     variant="outlined" 
                     className={classes.form}
                     defaultValue={values.address}
-                    
+                    inputProps={{
+                        style: {
+                          padding: 10
+                        }
+                     }}
                 />
                 <br/>
                 <TextField
@@ -132,7 +145,11 @@ return(
                     variant="outlined" 
                     className={classes.form}
                     defaultValue={values.secondAddress}
-                    
+                    inputProps={{
+                        style: {
+                          padding: 10
+                        }
+                     }}
                 />
                 <br/>
                 <TextField
@@ -141,7 +158,11 @@ return(
                     variant="outlined" 
                     className={classes.form}
                     defaultValue={values.city}
-                    
+                    inputProps={{
+                        style: {
+                          padding: 10
+                        }
+                     }}
                 />
                 <TextField
                     id="state" 
@@ -149,7 +170,11 @@ return(
                     variant="outlined" 
                     className={classes.form}
                     defaultValue={values.state}
-                    
+                    inputProps={{
+                        style: {
+                          padding: 10
+                        }
+                     }}
                 />
                 <TextField
                     id="zipCode" 
@@ -157,7 +182,11 @@ return(
                     variant="outlined" 
                     className={classes.form}
                     defaultValue={values.zipCode} 
-                    
+                    inputProps={{
+                        style: {
+                          padding: 10
+                        }
+                     }}
                 />
                 <TextField
                     id="email"
@@ -165,7 +194,11 @@ return(
                     variant="outlined" 
                     className={classes.form}
                     defaultValue={values.email}
-                   
+                    inputProps={{
+                        style: {
+                          padding: 10
+                        }
+                     }}
                 />
                 <TextField
                     id="primaryPhone" 
@@ -173,6 +206,11 @@ return(
                     variant="outlined" 
                     className={classes.form}
                     defaultValue={values.primaryPhone}
+                    inputProps={{
+                        style: {
+                          padding: 10
+                        }
+                     }}
                 />
                 </form>
             </Grid>

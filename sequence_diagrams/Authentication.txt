@@ -1,0 +1,15 @@
+title Authentication
+
+User->Login Page:Login to page
+Login Page->Forget Password: Forget Password
+Login Page->Authentication:Check login Details
+Authentication->Database:Valid Login Details
+Database->Landing Page: Provide authorization
+Landing Page->Landing Page:Refresh Auth Token
+Database<-Landing Page:Check authentication token for access
+Forget Password->Database:Check Security Question and Answer
+Forget Password<-Database:Send email to user to reset password
+Database->Database:Create Session and store in DB
+User<-Login Page:Login Success
+Login Page<--Authentication:Invalidate Login Details
+Login Page<-Database:Login Out of Application

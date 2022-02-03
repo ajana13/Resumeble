@@ -177,6 +177,15 @@ function Navbar({ auth, logoutUser }) {
                     <MenuItem>Profile</MenuItem>
                 </Link>
                 <Link
+                    {...{
+                        component: RouterLink,
+                        to: "/resume_upload",
+                        color: "inherit",
+                        style: {textDecoration: "none"},
+                        key: "resume_upload"}}>
+                    <MenuItem>Upload Resume</MenuItem>
+                </Link>
+                <Link
                     textDecoration="none"
                     color="inherit"
                     onClick={onLogoutClick}
@@ -231,6 +240,16 @@ function Navbar({ auth, logoutUser }) {
                        component: RouterLink,
                        className: menuButton }}>
                     Profile
+                </Button>
+
+                <Button
+                    {...{
+                       key: "resume_upload",
+                       color: "inherit",
+                       to: "/resume_upload",
+                       component: RouterLink,
+                       className: menuButton }}>
+                    Upload Resume
                 </Button>
               
                 <Button

@@ -8,7 +8,7 @@
 **/fastapi-env
 
 # Node modules
-node_modulesgi
+node_modules
 client/node_modules
 
 # Lock files
@@ -21,5 +21,6 @@ client/node_modules
 .idea
 
 # Config files
-config/.env
+config/*.env
+resume_parser/config/*.env
 config/*.json
