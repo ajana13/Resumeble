@@ -76,14 +76,16 @@ try {
 
     if (user) {
       try {
+        const {
+          name,
+          location,
+          about,
+        } = req.body;
+
         const profileFields = {
-          name: "Your Name",
-          location: "Your Location",
-          about: "Your About",
-          // skills: Array.isArray(skills)
-          //   ? skills
-          //   : skills.length === 0 ? [] : skills.split(",").map((skill) => skill.trim()),
-          // status:req.body.status,
+          name: req.body.name,
+          location: req.body.location,
+          about: req.body.about,
       };
   
         // Using upsert option (creates new doc if no match is found):
