@@ -73,21 +73,8 @@ router.post('/test/:userid', async (req,res) => {
 router.post('/upsertProfile/:userid', async (req,res) => {
 try {
     let user = await User.findById(req.params.userid);
-
     if (user) {
       try {
-        const {
-          name,
-          location,
-          about,
-        } = req.body;
-
-        const profileFields = {
-          name: req.body.name,
-          location: req.body.location,
-          about: req.body.about,
-      };
-  
         // Using upsert option (creates new doc if no match is found):
         const profile = await Profile.findOneAndUpdate(
           {userID: user.id},
@@ -97,6 +84,8 @@ try {
         
         user.profileID = profile.id;
         await user.save();
+        profile.name = user.name;
+        await profile.save();
 
         if (profile) {
           res.status(200).json({
