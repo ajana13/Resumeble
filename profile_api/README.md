@@ -14,7 +14,7 @@ Development with nodmon:
 
 Update or Create if profile doesn't exist
     Request: POST
-    Route: http://localhost:3001/api/profile/createProfile/userID
+    Route: http://localhost:3001/api/profile/upsertProfile/userID
 
 Read Profile
     Request: GET 

@@ -68,9 +68,9 @@ router.post('/test/:userid', async (req,res) => {
 
 
 // @desc: POST create or update profile
-// @route: http://localhost:3001/api/profile/createProfile/userID
-// test user: http://localhost:3001/api/profile/createProfile/61f0b6aac0cd2758d8ba6c0b
-router.post('/createProfile/:userid', async (req,res) => {
+// @route: http://localhost:3001/api/profile/upsertProfile/userID
+// test user: http://localhost:3001/api/profile/upsertProfile/61f0b6aac0cd2758d8ba6c0b
+router.post('/upsertProfile/:userid', async (req,res) => {
 try {
     let user = await User.findById(req.params.userid);
 
@@ -91,7 +91,7 @@ try {
         // Using upsert option (creates new doc if no match is found):
         const profile = await Profile.findOneAndUpdate(
           {userID: user.id},
-          {$set: profileFields},
+          {$set: req.body},
           {new: true, upsert: true, setDefaultsOnInsert: true}
         ); //.lean();
         
