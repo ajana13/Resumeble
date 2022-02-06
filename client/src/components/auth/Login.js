@@ -10,6 +10,7 @@ const Login = ({ auth, loginUser, history, errors }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
+  
   if (auth.isAuthenticated) {
     history.push('/dashboard');
   }
