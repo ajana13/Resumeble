@@ -20,10 +20,21 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  verified: {
+    type: Boolean,
+    default: false,
+  },
+  verification_url_code: {
+    type: String,
+    default: () => uuidv4(),
+  },
+  password_reset_url_code: {
+    type: String,
+    default: '',
+  },
   profileID: {
     type: String
   }
-
 });
 
 module.exports = User = mongoose.model("users", UserSchema);
