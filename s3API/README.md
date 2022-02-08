@@ -1,6 +1,6 @@
 # Resumeble
 
-profile API server
+Amazon S3 API server
 
 # Run the API Server
 
@@ -12,14 +12,14 @@ Development with nodmon:\
 
 # Routes
 
-Update or Create if profile doesn't exist\
+Upload file\
 Request: POST\
-Route: http://localhost:3001/api/profile/upsertProfile/userid
+Route: http://localhost:3001/api/s3/routes/upload
 
-Read Profile\
+Read file\
 Request: GET\
-Route: http://localhost:3001/api/routes/getProfile/userid
+Route: http://localhost:3001/api/s3/routes/readfile
 
-Delete Profile\
+Delete file\
 Request: DELETE\
-Route: http://localhost:3001/api/routes/deleteProfile/userid
+Route: http://localhost:3001/api/s3/routes/deletefile

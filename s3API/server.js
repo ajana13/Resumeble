@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //routes
 const routes = require('./routes');
-app.use('/api/routes', routes);
+app.use('/api/s3/routes', routes);
 app.use(express.static('client/build'));
 
 // app.use("/api/profile", require("./routes/profile"));
