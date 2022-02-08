@@ -70,9 +70,9 @@ export const logoutUser = () => dispatch => {
 
 export const sendResetPasswordLink = email => dispatch => {
   axios
-    .post("/auth/login/forgot", { email })
+    .post("/auth/password_reset", { email })
     .then(res => {
-        console.log(res.data);
+        console.log("yay");
     })
     .catch(err =>
       dispatch({
@@ -92,7 +92,7 @@ const resendConfirmation = (email) => http.post("/auth/resend", { email });
 const resetRegister = (email) => http.post("/auth/register/reset", { email });
 const getUser = () => http.get("/user");
 */
-
+/*
 export const attemptResetPassword = (tokenData, history)  => dispatch => {
   const {token, password} = tokenData;
   axios.post(`/auth/login/reset/${token}`, { password })
@@ -104,7 +104,7 @@ export const attemptResetPassword = (tokenData, history)  => dispatch => {
       })
     );
 }
-
+*/
 export const attemptGetConfirmation = (token, history) => dispatch => {
   axios
     .get(`/auth/confirmation/${token}`)

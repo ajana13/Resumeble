@@ -2,22 +2,21 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { loginUser } from "../../redux/actions/authActions";
+import { sendResetPasswordLink } from "../../redux/actions/authActions";
 import classnames from "classnames";
 
 const LoginForgot = ({ auth, loginUser, history, errors }) => {
 
-const [isSubmited, setIsSubmited] = React.useState(false);
-  
+
+  const [email, setEmail] = React.useState("");
   const onSubmit = e => {
     e.preventDefault();
 
     const userData = {
-      email: email,
-      password: password
-    };
+      email: email
+    }
 
-    loginUser(userData);
+    sendResetPasswordLink(userData);
   };
 
   return (
@@ -36,6 +35,39 @@ const [isSubmited, setIsSubmited] = React.useState(false);
                 Don't have an account? <Link to="/register">Register</Link>
               </p>
             </div>
+            <form noValidate onSubmit={onSubmit}>
+              <div className="input-field col s12">
+                <input
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    error={errors.email}
+                    id="email"
+                    type="email"
+                    className={classnames("", {
+                      invalid: errors.email || errors.emailnotfound
+                    })}
+                />
+                <label htmlFor="email">Email</label>
+                <span className="red-text">
+                  {errors.email}
+                    {errors.emailnotfound}
+                </span>
+              </div>
+              <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+                <button
+                    style={{
+                      width: "150px",
+                      borderRadius: "3px",
+                      letterSpacing: "1.5px",
+                      marginTop: "1rem"
+                    }}
+                    type="submit"
+                    className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                >
+                  Reset Password
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -58,5 +90,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { loginUser }
+    { sendResetPasswordLink }
 )(LoginForgot);
