@@ -2,7 +2,7 @@ const sendGrid = require('@sendgrid/mail');
 const path = require('path');
 const { isEmailValid } = require('./mailUtils');
 require('dotenv').config({
-  path: path.resolve(__dirname, './config/.env'),
+  path: path.resolve(__dirname, '../../config/.env'),
 });
 
 class MailModule {
@@ -38,10 +38,17 @@ class MailModule {
       // Initialize SendGrid
       this.sendGridMail = sendGrid;
       this.sendGridMail.setApiKey(process.env.SENDGRID_API_KEY);
-
       // Send Email
+      const msg = {
+        to: this.to, // Change to your recipient
+        from: this.from, // Change to your verified sender
+        subject: this.subject,
+        text: this.text,
+        html: this.html,
+      }
+
       this.sendGridMail
-        .send(this)
+        .send(msg)
         .then(() => {
           return true;
         })

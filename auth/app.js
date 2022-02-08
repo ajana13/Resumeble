@@ -55,12 +55,14 @@ app.disable('x-powered-by');
 
 // Routes
 app.use('/auth', auth);
-app.use(express.static('client/build'));
+// app.use(express.static('client/build'));
 
 // Serve static assets (build folder) if in production
+/*
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 });
+*/
 
 app.listen(port, () => {
     // eslint-disable-next-line no-console

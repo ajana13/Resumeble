@@ -26,7 +26,7 @@ const UserSchema = new Schema({
   },
   verification_url_code: {
     type: String,
-    default: () => uuidv4(),
+    // default: () => uuidv4(),
   },
   password_reset_url_code: {
     type: String,

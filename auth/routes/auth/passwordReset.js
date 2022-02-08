@@ -1,11 +1,18 @@
 /* eslint-disable no-param-reassign */
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const { v4: uuidv4 } = require('uuid');
+// const { v4: uuidv4 } = require('uuid');
+const { uuid } = require('uuidv4');
 const User = require('../../models/User');
-const MailModule = require('../../util/mails/mailModule');
+const MailModule = require('../../util/mail/mailModule');
+
+const path = require('path');
+const multer = require('multer');
+require('dotenv').config({ path: path.resolve(__dirname, '../../config/.env') });
 
 const router = express.Router();
+
+const port = process.env.PORT || 5000;
 
 // Route to extract the code and show user a page to update their password
 router.get('/password_reset/:code', (req, res) => {
@@ -15,7 +22,6 @@ router.get('/password_reset/:code', (req, res) => {
       if (!user) {
         return res.status(404).json({ err: `This link doesn't exist` });
       }
-
       // TODO: Show a landing page for password resets
       return res.redirect('/');
     });
@@ -35,8 +41,8 @@ router.post('/password_reset', (req, res) => {
         return res.status(400).json({ err: `This user doesn't exist` });
       }
       // Generate unique code for reset url
-      const uniqueCode = uuidv4();
-
+      const uniqueCode = uuid();
+      console.log(uniqueCode);
       // Update the url code in DB
       user.password_reset_url_code = uniqueCode;
       user.save();
@@ -48,7 +54,7 @@ router.post('/password_reset', (req, res) => {
         `Hello ${user.name}, your password....`, // Preview Text
         `<p>Hello ${user.name}, your password can be reset by visiting the following link:</p>
         <br />
-        <p><a href=http://localhost:5000/auth/password_reset/${uniqueCode}>http://localhost:5000/auth/password_reset/${uniqueCode}</a></p>
+        <p><a href=http://localhost:${port}/auth/password_reset/${uniqueCode}>http://localhost:${port}/auth/password_reset/${uniqueCode}</a></p>
         <br />
         <p>Best,</p>
         <p>BUILD UMass</p>`
