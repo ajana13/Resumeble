@@ -81,6 +81,21 @@ export const sendResetPasswordLink = (email, history) => dispatch => {
       })
   );
 }
+
+export const resetForgottenPassword = (userData, history) => dispatch => {
+  axios
+    .post("/auth/reset_forgotten_password", userData)
+      .then(res => {
+          history.push("./confirmforgotpassword")
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+    );
+}
+
 /*
 const postLogin = (user) => http.post("/auth/login", user);
 const sendResetPasswordLink = (email) => http.post("/auth/login/forgot", { email });
@@ -104,7 +119,7 @@ export const attemptResetPassword = (tokenData, history)  => dispatch => {
       })
     );
 }
-*/
+
 export const attemptGetConfirmation = (token, history) => dispatch => {
   axios
     .get(`/auth/confirmation/${token}`)
@@ -133,3 +148,4 @@ export const attemptResetRegister = (email, history) => dispatch => {
       history.push("/register");
     });
 }
+*/

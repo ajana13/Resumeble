@@ -19,7 +19,10 @@ function ConfirmResetPasswordPage({ auth, history }) {
                     <p className="grey-text text-darken-1">
                         Return <Link to="/">Home</Link>
                     </p>
-                    <p>An email was sent to reset your account. Verify that you have received your email in your inbox.</p>
+                    <p>
+                    A reset link has been sent to your email. <b>You have 12 hours to activate your account.</b>
+                    It can take up to 15 min to receive our email.
+                    </p>
                 </div>
             </div>
         </div>

@@ -18,7 +18,7 @@ import Profile from "./components/profile/Profile";
 import FileUpload from "./components/resume_parser/FileUpload";
 import LoginForgot from "./components/auth/LoginForgot";
 import ConfirmResetPasswordPage from "./components/auth/ConfirmResetPasswordPage";
-
+import ResetForgottenPassword from "./components/auth/ResetForgottenPassword";
 import "./App.css";
 
 // Check for token to keep user logged in
@@ -54,6 +54,7 @@ class App extends Component {
             <Route exact path="/about" component={About} />
             <Route path="/forgotpassword" component={LoginForgot} />
             <Route path="/confirmforgotpassword" component={ConfirmResetPasswordPage} />
+            <Route path="/resetpassword" component={ResetForgottenPassword} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path="/profile" component={Profile} />

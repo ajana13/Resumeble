@@ -23,7 +23,7 @@ router.get('/password_reset/:code', (req, res) => {
         return res.status(404).json({ err: `This link doesn't exist` });
       }
       // TODO: Show a landing page for password resets
-      return res.redirect('/');
+      return res.redirect('/resetpassword');
     });
   } catch (err) {
     // eslint-disable-next-line no-console
@@ -55,7 +55,7 @@ router.post('/password_reset', (req, res) => {
         `Hello ${user.name}, your password....`, // Preview Text
         `<p>Hello ${user.name}, your password can be reset by visiting the following link:</p>
         <br />
-        <p><a href=http://localhost:${port}/auth/password_reset/${uniqueCode}>http://localhost:${port}/auth/password_reset/${uniqueCode}</a></p>
+        <p><a href=http://localhost:5050/auth/password_reset/${uniqueCode}>http://localhost:5050/auth/password_reset/${uniqueCode}</a></p>
         <br />
         <p>Best,</p>
         <p>BUILD UMass</p>`
@@ -73,9 +73,9 @@ router.post('/password_reset', (req, res) => {
 });
 
 // Route to update the password of a user
-router.patch('/password_reset', (req, res) => {
-  const { email, oldPassword, newPassword } = req.body;
-  User.findOne({ email }).then((user) => {
+router.patch('"/auth/reset_forgotten_password"', (req, res) => {
+  const { password, secondPassword } = req.body;
+  User.findOne({  }).then((user) => {
     if (!user) {
       return res.status(400).json({ err: `This user doesn't exist` });
     }
