@@ -73,16 +73,21 @@ router.post('/password_reset', (req, res) => {
 });
 
 // Route to update the password of a user
-router.patch('"/auth/reset_forgotten_password"', (req, res) => {
-  const { password, secondPassword } = req.body;
-  User.findOne({  }).then((user) => {
+router.post("/reset_new_password", (req, res) => {
+  const { email, password, secondPassword } = req.body;
+  User.findOne({ email }).then((user) => {
     if (!user) {
       return res.status(400).json({ err: `This user doesn't exist` });
     }
+
+    if(password != secondPassword) {
+      return res.status(400).json({ err: `Passwords don't match` });
+    }
+
     // Check if old password is correct
-    return bcrypt.compare(oldPassword, user.password).then((isMatch) => {
-      if (isMatch) {
-        user.password = newPassword;
+    if(user.password_reset_url_code != "") {
+        user.password = password;
+        user.password_reset_url_code = "";
         return bcrypt.genSalt(10, (error, salt) => {
           bcrypt.hash(user.password, salt, (err, hash) => {
             if (err) throw err;
@@ -95,8 +100,6 @@ router.patch('"/auth/reset_forgotten_password"', (req, res) => {
           });
         });
       }
-      return res.status(400).json({ err: `Incorrect password` });
-    });
   });
 });
 

@@ -2,14 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { loginUser } from "../../redux/actions/authActions";
+import { resetPassword } from "../../redux/actions/authActions";
 import classnames from "classnames";
 
-const ResetForgottenPassword = ({ auth, history, errors }) => {
+const ResetForgottenPassword = ({ auth, resetPassword, history, errors }) => {
   if (auth.isAuthenticated) {
     history.push('/dashboard');
   }
 
+  const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [passwordTwice, setPasswordTwice] = React.useState("");
 
@@ -17,12 +18,13 @@ const ResetForgottenPassword = ({ auth, history, errors }) => {
     e.preventDefault();
 
     const userData = {
+      email: email,
       password: password,
       secondPassword:  passwordTwice
     };
 
     
-    // ResetPasswordAction(values, history);
+    resetPassword(userData, history);
   };
 
   return (
@@ -31,10 +33,27 @@ const ResetForgottenPassword = ({ auth, history, errors }) => {
           <div className="col s8 offset-s2">
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
               <h4>
-                <b>Reset password below</b> below
+                <b>Reset password</b> below
               </h4>
             </div>
             <form noValidate onSubmit={onSubmit}>
+              <div className="input-field col s12">
+                <input
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    error={errors.email}
+                    id="email"
+                    type="email"
+                    className={classnames("", {
+                      invalid: errors.email || errors.emailnotfound
+                    })}
+                />
+                <label htmlFor="email">Email</label>
+                <span className="red-text">
+                  {errors.email}
+                  {errors.emailnotfound}
+                </span>
+              </div>
               <div className="input-field col s12">
                 <input
                     onChange={e => setPassword(e.target.value)}
@@ -92,6 +111,7 @@ const ResetForgottenPassword = ({ auth, history, errors }) => {
 
 ResetForgottenPassword.propTypes = {
   auth: PropTypes.object.isRequired,
+  resetPassword: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
@@ -105,5 +125,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { loginUser }
+    { resetPassword }
 )(ResetForgottenPassword);

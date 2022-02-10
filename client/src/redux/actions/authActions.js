@@ -82,10 +82,12 @@ export const sendResetPasswordLink = (email, history) => dispatch => {
   );
 }
 
+// Rename to sendRequestForRequestForgottenPassword
 export const resetForgottenPassword = (userData, history) => dispatch => {
   axios
     .post("/auth/reset_forgotten_password", userData)
       .then(res => {
+          // Rename to confirmRequestForgottenPassword
           history.push("./confirmforgotpassword")
       })
       .catch(err =>
@@ -95,6 +97,22 @@ export const resetForgottenPassword = (userData, history) => dispatch => {
         })
     );
 }
+
+
+export const resetPassword = (userData, history) => dispatch => {
+  axios
+    .post("/auth/reset_new_password", userData)
+      .then(res => {
+          history.push("/login")
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+    );
+}
+
 
 /*
 const postLogin = (user) => http.post("/auth/login", user);
