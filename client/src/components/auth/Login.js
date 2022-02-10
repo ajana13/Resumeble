@@ -92,6 +92,11 @@ const Login = ({ auth, loginUser, history, errors }) => {
                 </button>
               </div>
             </form>
+            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+              <p className="grey-text text-darken-1">
+                Forget password? <Link to="/forgotpassword">Reset Password</Link>
+              </p>
+            </div>
           </div>
         </div>
       </div>

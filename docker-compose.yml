@@ -1,22 +1,22 @@
 version: "3.7"
 services:
-  mongodb_container:
-    image: mongo:latest
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: rootpassword
-    ports:
-      - 27017:27017
-    volumes:
-      - mongodb_data_container:/data/db
-    restart: unless-stopped
+  # mongodb_container:
+  #   image: mongo:latest
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: rootpassword
+  #   ports:
+  #     - 27017:27017
+  #   volumes:
+  #     - mongodb_data_container:/data/db
+    # restart: unless-stopped
   client:
     build: 
       context: client
       dockerfile: Dockerfile
     restart: unless-stopped
-    links:
-      - mongodb_container
+    # links:
+    #   - mongodb_container
     ports:
       - "5001:5000"
     environment:
@@ -26,8 +26,8 @@ services:
       context: auth
       dockerfile: Dockerfile
     restart: unless-stopped
-    links:
-      - mongodb_container
+    # links:
+    #   - mongodb_container
     volumes:
       - ./:/usr/src/app
     ports:
@@ -55,5 +55,5 @@ services:
     depends_on:
       - client
       - auth
-volumes:
-  mongodb_data_container:
+# volumes:
+#   mongodb_data_container
