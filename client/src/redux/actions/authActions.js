@@ -68,11 +68,11 @@ export const logoutUser = () => dispatch => {
 };
 
 
-export const sendResetPasswordLink = email => dispatch => {
+export const sendResetPasswordLink = (email, history) => dispatch => {
   axios
-    .post("/auth/password_reset", { email })
+    .post("/auth/password_reset", email)
     .then(res => {
-        console.log("yay");
+        history.push("./confirmforgotpassword")
     })
     .catch(err =>
       dispatch({

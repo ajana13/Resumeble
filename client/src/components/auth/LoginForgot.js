@@ -5,18 +5,16 @@ import { connect } from "react-redux";
 import { sendResetPasswordLink } from "../../redux/actions/authActions";
 import classnames from "classnames";
 
-const LoginForgot = ({ auth, loginUser, history, errors }) => {
+const LoginForgot = ({ auth, sendResetPasswordLink, history, errors }) => {
 
+  if (auth.isAuthenticated) {
+    history.push('/dashboard');
+  }
 
   const [email, setEmail] = React.useState("");
   const onSubmit = e => {
     e.preventDefault();
-
-    const userData = {
-      email: email
-    }
-
-    sendResetPasswordLink(userData);
+    sendResetPasswordLink({email: email}, history);
   };
 
   return (
@@ -29,11 +27,8 @@ const LoginForgot = ({ auth, loginUser, history, errors }) => {
             </Link>
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
               <h4>
-                <b></b> below
+                <b>Reset Password</b> below
               </h4>
-              <p className="grey-text text-darken-1">
-                Don't have an account? <Link to="/register">Register</Link>
-              </p>
             </div>
             <form noValidate onSubmit={onSubmit}>
               <div className="input-field col s12">

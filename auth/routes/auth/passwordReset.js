@@ -35,6 +35,8 @@ router.get('/password_reset/:code', (req, res) => {
 // The route used to kickoff a password reset process
 router.post('/password_reset', (req, res) => {
   const { email } = req.body;
+  // console.log(email);
+  // return res.status(200).send('Success');
   try {
     return User.findOne({ email }).then((user) => {
       if (!user) {
@@ -42,7 +44,6 @@ router.post('/password_reset', (req, res) => {
       }
       // Generate unique code for reset url
       const uniqueCode = uuid();
-      console.log(uniqueCode);
       // Update the url code in DB
       user.password_reset_url_code = uniqueCode;
       user.save();
@@ -61,10 +62,12 @@ router.post('/password_reset', (req, res) => {
       );
       msg.send();
 
+      console.log("hi");
       return res.status(200).send('Success');
     });
   } catch (err) {
     // eslint-disable-next-line no-console
+    console.log(err);
     return res.send(err);
   }
 });
