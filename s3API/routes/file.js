@@ -3,6 +3,20 @@ const express = require('express');
 const router = express.Router();
 
 const path = require('path');
+//loading from config
+// const config = require("config");
+// const bucketName = config.get("S3_BUCKET_NAME");
+
+
+// const s3 = new AWS.S3({
+//   accessKeyId: config.get("AWSAccessKeyId"),
+//   secretAccessKey: config.get("AWSSecretKey")
+// });
+
+//not sure what this is
+// const signedUrlExpireSeconds = config.get("signedUrlExpireSeconds");
+
+
 require('dotenv').config({ path: path.resolve(__dirname, '../config/.env') });
 
 // const Profile = require('../models/Profile');
@@ -35,38 +49,6 @@ router.get('/readfile/:fileid', async (req,res) => {
     });
   }
 })
-
-//test
-router.post('/test/:fileid', async (req,res) => {
-    try {
-        let user = await User.findById(req.params.userid);
-
-        const testFields = {
-            name: "testname",
-            location: "testloc",
-            about: "testabout",
-        };
-
-        // Using upsert option (creates new doc if no match is found):
-        const test = await Test.findOneAndUpdate(
-          {userID: user.id},
-          {$set: testFields},
-          {new: true, upsert: true, setDefaultsOnInsert: true}
-        );//.lean();
-        
-        //   clearCache(`profile:${req.user.id}`);
-        res.status(200).json({
-            status: 200,
-            data: test,
-        })
-    } catch (err) {
-        res.status(400).json({
-            status: 400,
-            message: err.message,
-        });
-    }
-})
-
 
 // Request: POST 
 // Route: http://localhost:3001/api/s3/routes/upload
@@ -127,41 +109,38 @@ router.put('/saveProfile', async (req,res) => {
 // Request: DELETE
 // Route: http://localhost:3001/api/s3/routes/deletefile
 router.delete('/deletefile/:fileid', async (req,res) => {
-  try {
-    let user = await User.findById(req.params.userid);
-    if (user) {
-      try {
-        const profile = await Profile.findOneAndDelete(
-          {userID: user.id}
-        ); //.lean();
+    try {
+      const filename = req.query.filename;
+      console.log(filename);
+      await deleteFile(filename);
+      res.status(200).json({msg: "success"});
   
-        if (profile) {
-          res.status(200).json({
-            status: 200,
-            data: profile,
-          });
-        }
-        res.status(400).json({
-          status: 400,
-          message: "No profile found",
-        });
-      } catch (err) {
-        res.status(400).json({
-          status: 400,
-          message: err.message,
-        });
-      }
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
     }
-    res.status(400).json({
-      status: 400,
-      message: "No user found",
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 400,
-      message: err.message,
-    });
-  }
 })
 
+const deleteFile = async (filename) => {
+
+  const params = {
+    Bucket: bucketName,
+    Key: filename
+  };
+
+  try {
+    await s3.deleteObject(params).promise();
+
+    console.log(`File deleted successfully`);
+
+  } catch (s3Err) {
+    console.log(s3Err.message);
+  }
+};
+
+//test
+router.post('/test', async (req,res) => {
+
+
+})
 module.exports = router;

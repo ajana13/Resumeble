@@ -6,6 +6,6 @@ const file = require('./file');
 const router = express.Router();
 
 // Adding all routes
-router.use(profile);
+router.use(file);
 
 module.exports = router;

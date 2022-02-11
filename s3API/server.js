@@ -1,6 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const AWS = require("aws-sdk");
+const config = require("config");
+const bucketName = config.get("S3_BUCKET_NAME");
+const accessKeyId = config.get("AWSAccessKeyId");
+const secretAccessKey = config.get("AWSSecretKey");
+
+// const s3 = new AWS.S3({
+//   accessKeyId: config.get("AWSAccessKeyId"),
+//   secretAccessKey: config.get("AWSSecretKey")
+// });
+
+var creds = new AWS.Credentials({
+  accessKeyId: accessKeyId, secretAccessKey: secretAccewssKey, sessionToken: 'session'
+});
 
 require('dotenv').config({ path: path.resolve(__dirname, './config/.env') });
 
@@ -20,6 +34,10 @@ mongoose
 .then(() => console.log('MongoDB successfully connected'))
 // eslint-disable-next-line no-console
 .catch((err) => console.log(err));
+
+//loading from config.json
+AWS.config.loadFromPath('./config/s3config.json');
+
 
 // Bodyparser middleware
 app.use(express.json());
