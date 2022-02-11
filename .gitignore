@@ -23,7 +23,6 @@ profile_api/node_modules
 .idea
 
 # Config files
-config/*.env
-resume_parser/config/*.env
-config/*.json
-s3API/config/*.json
+**.env
+**/s3config.json
+
