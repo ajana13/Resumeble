@@ -1,20 +1,33 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-const AWS = require("aws-sdk");
-const config = require("config");
-const bucketName = config.get("S3_BUCKET_NAME");
-const accessKeyId = config.get("AWSAccessKeyId");
-const secretAccessKey = config.get("AWSSecretKey");
+
+// const AWS = require("aws-sdk");
+// const config = require("config");
+
+
+// const accessKeyId = config.get('AWSAccessKeyId');
+// const secretAccessKey = config.get('AWSSecretAccessKey');
+// const bucketName = config.get('S3_BUCKET_NAME');
+
 
 // const s3 = new AWS.S3({
 //   accessKeyId: config.get("AWSAccessKeyId"),
-//   secretAccessKey: config.get("AWSSecretKey")
+//   secretAccessKey: config.get("AWSSecretAccessKey")
 // });
 
-var creds = new AWS.Credentials({
-  accessKeyId: accessKeyId, secretAccessKey: secretAccewssKey, sessionToken: 'session'
-});
+// Call S3 to list the buckets
+// s3.listBuckets(function(err, data) {
+//   if (err) {
+//     console.log("Error", err);
+//   } else {
+//     console.log("Success", data.Buckets);
+//   }
+// });
+
+// var creds = new AWS.Credentials({
+//   accessKeyId: accessKeyId, secretAccessKey: secretAccessKey, sessionToken: 'session'
+// });
 
 require('dotenv').config({ path: path.resolve(__dirname, './config/.env') });
 
@@ -35,10 +48,6 @@ mongoose
 // eslint-disable-next-line no-console
 .catch((err) => console.log(err));
 
-//loading from config.json
-AWS.config.loadFromPath('./config/s3config.json');
-
-
 // Bodyparser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -48,8 +57,6 @@ app.use(express.urlencoded({ extended: false }));
 const routes = require('./routes');
 app.use('/api/s3/routes', routes);
 app.use(express.static('client/build'));
-
-// app.use("/api/profile", require("./routes/profile"));
 
 app.listen(PORT, () => {
   console.log(`Profile API Server is listening on ${PORT}`);

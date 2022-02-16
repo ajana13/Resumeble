@@ -3,19 +3,19 @@ const express = require('express');
 const router = express.Router();
 
 const path = require('path');
-//loading from config
-// const config = require("config");
-// const bucketName = config.get("S3_BUCKET_NAME");
+const AWS = require("aws-sdk");
+const config = require("config");
 
 
-// const s3 = new AWS.S3({
-//   accessKeyId: config.get("AWSAccessKeyId"),
-//   secretAccessKey: config.get("AWSSecretKey")
-// });
+const accessKeyId = config.get('AWSAccessKeyId');
+const secretAccessKey = config.get('AWSSecretAccessKey');
+const bucketName = config.get('S3_BUCKET_NAME');
 
-//not sure what this is
-// const signedUrlExpireSeconds = config.get("signedUrlExpireSeconds");
 
+const s3 = new AWS.S3({
+  accessKeyId: config.get("AWSAccessKeyId"),
+  secretAccessKey: config.get("AWSSecretAccessKey")
+});
 
 require('dotenv').config({ path: path.resolve(__dirname, '../config/.env') });
 
@@ -25,7 +25,7 @@ require('dotenv').config({ path: path.resolve(__dirname, '../config/.env') });
 
 // Read file
 // Request: GET
-// Route: http://localhost:3001/api/s3/routes/readfile
+// Route: http://localhost:3002/api/s3/routes/readfile
 router.get('/readfile/:fileid', async (req,res) => {
   try {
     let user = await User.findById(req.params.userid);
@@ -51,7 +51,7 @@ router.get('/readfile/:fileid', async (req,res) => {
 })
 
 // Request: POST 
-// Route: http://localhost:3001/api/s3/routes/upload
+// Route: http://localhost:3002/api/s3/routes/upload
 router.post('/upload/:fileid', async (req,res) => {
 try {
     let user = await User.findById(req.params.userid);
@@ -101,20 +101,19 @@ try {
 
 // Upload file
 // Request: POST
-// Route: http://localhost:3001/api/s3/routes/upload
+// Route: http://localhost:3002/api/s3/routes/upload
 router.put('/saveProfile', async (req,res) => {
 })
 
 // Delete file
 // Request: DELETE
-// Route: http://localhost:3001/api/s3/routes/deletefile
+// Route: http://localhost:3002/api/s3/routes/deletefile
 router.delete('/deletefile/:fileid', async (req,res) => {
     try {
       const filename = req.query.filename;
       console.log(filename);
       await deleteFile(filename);
       res.status(200).json({msg: "success"});
-  
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server Error");
@@ -138,9 +137,22 @@ const deleteFile = async (filename) => {
   }
 };
 
-//test
-router.post('/test', async (req,res) => {
-
-
+// list all buckets
+// Request: GET
+// Route: http://localhost:3002/api/s3/routes/listBuckets
+router.get('/listBuckets', async (req,res) => {
+  s3.listBuckets(function(err, data) {
+    if (err) {
+      res.status(400).json({
+        status: 400,
+        message: err.message,
+      });
+    } else {
+      res.status(200).json({
+        status: 200,
+        data: data.Buckets,
+      });
+    }
+  });
 })
 module.exports = router;
