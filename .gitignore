@@ -25,4 +25,3 @@ profile_api/node_modules
 # Config files
 **.env
 **/s3config.json
-
