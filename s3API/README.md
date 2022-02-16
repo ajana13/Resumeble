@@ -19,30 +19,30 @@ Amazon S3 API server
 ```
 4. Place both the .env and s3config.json file in s3API\config file
 # Run the s3 API Server
-Production:\
+Production:
 ```
 npm start
 ```
 
-Development with nodmon:\
+Development with nodmon:
 ```
 npm run start_dev`
 ```
 # Routes
 
-## Upload file\
+## Upload file
 ```
-Request: POST\
+Request: POST
 Route: http://localhost:3002/api/s3/routes/upload
 ```
-## Read file\
+## Read file
 ```
-Request: GET\
+Request: GET
 Route: http://localhost:3002/api/s3/routes/readfile
 ```
 
-## Delete file\
+## Delete file
 ```
-Request: DELETE\
+Request: DELETE
 Route: http://localhost:3002/api/s3/routes/deletefile
 ```
