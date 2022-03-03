@@ -1,0 +1,50 @@
+.Projects-card {
+  display: flex;
+  flex-direction: column;
+  margin: 1em;
+  background-color: rgb(62, 62, 62);
+  border-radius: 30px 30px 30px 30px;
+}
+
+.Projects-Date-Text{
+  display: flex;
+  flex-direction: row;
+  font-style: italic;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  color: #fff;
+  font-size: 10px;
+  font-family: 'PT Sans', sans-serif;
+}
+
+.Projects-card-title-text {
+  margin-top: 10px;
+  margin-bottom: 0px;
+  margin-right: 10px;
+  margin-left: 10px;
+  color: rgb(227, 76, 103);
+  font-size: 25px;
+}
+
+.Projects-card-sub-text {
+ 
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  color: #fff;
+  font-size: 20px;
+  font-family: 'PT Sans', sans-serif;
+  font-weight: lighter;
+}
+
+.Edit-Buttons{
+margin-top: 10px;
+
+}
+
+
+.Projects-Card-School{
+  display: flex;
+  flex-direction: row;
+}

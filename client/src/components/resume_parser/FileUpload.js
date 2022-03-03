@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
+import Button from "@mui/material/Button";
 import Dropzone from 'react-dropzone';
+import './FileUpload.css';
 // import UploadService from "../services/FileUploadService";
 import {  uploadResumeRequest } from "../../redux/actions/resumeActions";
 
@@ -53,10 +55,10 @@ function FileUpload ({ auth, history }) {
     
 
 	return (
-        <div style={{ height: "75vh" }} className="container valign-wrapper">
+        <div className='FileUpload'>
             <div className="row">
                 <form onSubmit={handleOnSubmit}>
-                    <h3>React File Upload</h3>
+                    <h1 className="text-sub">React File Upload</h1>
                     {/* The onDragEnter function will be triggered when the file is over 
                     the drop area and onDragLeave function will be triggered when the file 
                     is removed from the drop area. */}
@@ -68,10 +70,10 @@ function FileUpload ({ auth, history }) {
                             {({ getRootProps, getInputProps }) => (
                             <div {...getRootProps({ className: 'drop-zone' })} ref={dropRef}>
                                 <input {...getInputProps()} />
-                                <p>Drag and drop a file OR click here to select a file</p>
+                                <h1 className="text-sub">Drag and drop a file OR click here to select a file</h1>
                                 {file && (
                                 <div>
-                                    <strong>Selected file:</strong> {file.name}
+                                    <strong className="text-sub">Selected file:</strong> {file.name}
                                 </div>
                                 )}
                             </div>
@@ -84,17 +86,17 @@ function FileUpload ({ auth, history }) {
                             </div>
                             ) : (
                             <div className="preview-message">
-                                <p>No preview available for this file</p>
+                                <h1 className="text-sub">No preview available for this file</h1>
                             </div>
                             )
                         ) : (
                             <div className="preview-message">
-                            <p>Image preview will be shown here after selection</p>
+                            <h1 className="text-sub">Image preview will be shown here after selection</h1>
                             </div>
                         )}
                     </div>
                     <div className="form-group">
-                        <button className="btn btn-primary" type="submit">Upload</button>
+                        <Button className="btn btn-primary" type="submit">Upload</Button>
                     </div>
                 </form>
             </div>

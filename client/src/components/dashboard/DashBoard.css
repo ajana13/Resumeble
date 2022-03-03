@@ -1,0 +1,22 @@
+.DashBoard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30%;
+  }
+  
+  .dash-text-name {
+    font-family: "PT Sans", sans-serif;
+    color: rgb(255, 255, 255);
+    font-size: 50px;
+    text-align: center;
+  }
+  
+  .dash-text-sub {
+    font-family: "PT Sans", sans-serif;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: lighter;
+  }
+  

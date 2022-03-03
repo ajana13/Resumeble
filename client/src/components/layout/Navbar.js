@@ -54,13 +54,13 @@ const useStyles = makeStyles(() => ({
 
     },
     logo: {
-        fontFamily: "Work Sans, sans-serif",
+        fontFamily: "PT Sans, sans-serif",
         fontWeight: 600,
         color: "black",
         textAlign: "left",
     },
     menuButton: {
-        fontFamily: "Open Sans, sans-serif",
+        fontFamily: "PT Sans, sans-serif",
         fontWeight: 700,
         size: "18px",
         marginLeft: "38px",
