@@ -2,125 +2,251 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import * as Yup from 'yup';
+import { useState } from 'react';
 import { registerUser } from "../../redux/actions/authActions";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Wave from "react-wavify";
 import classnames from "classnames";
+import "./Register.css";
+import Iconify from './Iconify';
+import { useFormik, Form, FormikProvider } from 'formik';
+import {
+  Stack,
+  Checkbox,
+  IconButton,
+  InputAdornment,
+  FormControlLabel
+} from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 
-const Register = ({ auth, errors, registerUser, history }) => {
+const Register = ({ auth,registerUser, history }) => {
 
-  const [name, setName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [password2, setPassword2] = React.useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+
+  const RegisterSchema = Yup.object().shape({
+    name: Yup.string().required('Password is required'),
+    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
+    password: Yup.string().required('Password is required'),
+    password2: Yup.string().required('Password is required'),
+    
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      password: '',
+      password2: ''
+    },
+
+    validationSchema: RegisterSchema,
+    onSubmit: () => {
+     
+      const newUser = {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        password2: values.password2
+      };
+    
+      registerUser(newUser, history);
+    }
+  });
 
   if (auth.isAuthenticated) {
-    history.push('/dashboard');
+    history.push("/dashboard");
   }
 
-  const onSubmit = e => {
-    e.preventDefault();
+  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
 
-    const newUser = {
-      name: name,
-      email: email,
-      password: password,
-      password2: password2
-    };
-
-    registerUser(newUser, history);
+  const handleShowPassword = () => {
+    setShowPassword((show) => !show);
   };
 
-  // e => setEmail(e.target.value)
+
+  const handleShowPassword2 = () => {
+    setShowPassword2((show) => !show);
+  };
+  
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col s8 offset-s2">
-          <Link to="/" className="btn-flat waves-effect">
-            <i className="material-icons left">keyboard_backspace</i> Back to
-            home
-          </Link>
-          <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-            <h4>
-              <b>Register</b> below
-            </h4>
-            <p className="grey-text text-darken-1">
-              Already have an account? <Link to="/login">Log in</Link>
-            </p>
+  
+    <div className="Register">
+
+    <div className="header-profile-register">
+            <Wave
+              fill="#FA7268"
+              paused={false}
+              options={{
+                height: 60,
+                amplitatude: 40,
+                speed: 0.2,
+                points: 4,
+              }}
+            />
+    
+            <div className="wave-overlap3">
+              <Wave
+                fill="#e34c67"
+                paused={false}
+                options={{
+                  height: 90,
+                  amplitatude: 40,
+                  speed: 0.1,
+                  points: 4,
+                }}
+              />
+            </div>
+    
+            <div className="wave-overlap4">
+              <Wave
+                fill="#C62368"
+                paused={false}
+                options={{
+                  height: 110,
+                  amplitatude: 40,
+                  speed: 0.1,
+                  points: 4,
+                }}
+              />
+            </div>
           </div>
-          <form noValidate onSubmit={onSubmit}>
-            <div className="input-field col s12">
-              <input
-                  onChange={e => setName(e.target.value)}
-                  value={name}
-                  error={errors.name}
-                  id="name"
-                  type="text"
-                  className={classnames("", {
-                    invalid: errors.name
-                  })}
+    
+    <h1 className="title-text-register">Register</h1>
+    
+          <div className="RegisterContent">
+    
+            <FormikProvider value={formik}>
+          <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+            <Stack spacing={3}>
+              <TextField
+                fullWidth
+                label="Name"
+                {...getFieldProps('name')}
+                error={Boolean(touched.name && errors.name)}
+                helperText={touched.name && errors.name}
               />
-              <label htmlFor="name">Name</label>
-              <span className="red-text">{errors.name}</span>
-            </div>
-            <div className="input-field col s12">
-              <input
-                  onChange={e => setEmail(e.target.value)}
-                  value={email}
-                  error={errors.email}
-                  id="email"
-                  type="email"
-                  className={classnames("", {
-                    invalid: errors.email
-                  })}
+
+
+<TextField
+                fullWidth
+                type="email"
+                label="Email address"
+                {...getFieldProps('email')}
+                error={Boolean(touched.email && errors.email)}
+                helperText={touched.email && errors.email}
               />
-              <label htmlFor="email">Email</label>
-              <span className="red-text">{errors.email}</span>
-            </div>
-            <div className="input-field col s12">
-              <input
-                  onChange={e => setPassword(e.target.value)}
-                  value={password}
-                  error={errors.password}
-                  id="password"
-                  type="password"
-                  className={classnames("", {
-                    invalid: errors.password
-                  })}
+    
+              <TextField
+                fullWidth
+                type={showPassword ? 'text' : 'password'}
+                label="Password"
+                {...getFieldProps('password')}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleShowPassword} edge="end">
+                        <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
+                error={Boolean(touched.password && errors.password)}
+                helperText={touched.password && errors.password}
               />
-              <label htmlFor="password">Password</label>
-              <span className="red-text">{errors.password}</span>
-            </div>
-            <div className="input-field col s12">
-              <input
-                  onChange={e => setPassword2(e.target.value)}
-                  value={password2}
-                  error={errors.password2}
-                  id="password2"
-                  type="password"
-                  className={classnames("", {
-                    invalid: errors.password2
-                  })}
+
+
+<TextField
+                fullWidth
+                type={showPassword ? 'text' : 'password'}
+                label="Password2"
+                {...getFieldProps('password2')}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleShowPassword2} edge="end">
+                        <Iconify icon={showPassword2 ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
+                error={Boolean(touched.password2 && errors.password2)}
+                helperText={touched.password2 && errors.password2}
               />
-              <label htmlFor="password2">Confirm Password</label>
-              <span className="red-text">{errors.password2}</span>
+            </Stack>
+             <div className="button-register">
+            <LoadingButton
+              fullWidth
+              size="large"
+              type="submit"
+              variant="contained"
+              loading={isSubmitting}
+            >
+              Register
+            </LoadingButton>
+
             </div>
-            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-              <button
-                  style={{
-                    width: "150px",
-                    borderRadius: "3px",
-                    letterSpacing: "1.5px",
-                    marginTop: "1rem"
-                  }}
-                  type="submit"
-                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-              >
-                Sign up
-              </button>
+          </Form>
+        </FormikProvider>
+          </div>
+    
+          <div className="footer-profile-register">
+            <Wave
+              className="wave"
+              fill="#FA7268"
+              paused={false}
+              options={{
+                height: 60,
+                amplitatude: 40,
+                speed: 0.2,
+                points: 4,
+              }}
+            />
+    
+            <div className="wave-overlap">
+              <Wave
+                className="wave"
+                fill="#e34c67"
+                paused={false}
+                options={{
+                  height: 90,
+                  amplitatude: 40,
+                  speed: 0.1,
+                  points: 4,
+                }}
+              />
             </div>
-          </form>
+    
+            <div className="wave-overlap">
+              <Wave
+                className="wave"
+                fill="#C62368"
+                paused={false}
+                options={{
+                  height: 110,
+                  amplitatude: 40,
+                  speed: 0.1,
+                  points: 4,
+                }}
+              />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+
+
+
+
+
+
+
+
+
+
+
+
   );
 
 

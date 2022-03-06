@@ -2,88 +2,211 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import * as Yup from 'yup';
+import { useState } from 'react';
 import { loginUser } from "../../redux/actions/authActions";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Wave from "react-wavify";
 import classnames from "classnames";
 import "./Login.css";
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import { useFormik, Form, FormikProvider } from 'formik';
+import {
+  Stack,
+  Checkbox,
+  IconButton,
+  InputAdornment,
+  FormControlLabel
+} from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+// component
+import Iconify from './Iconify';
 
-const Login = ({ auth, loginUser, history, errors }) => {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+const Login = ({ auth, loginUser, history}) => {
+
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const LoginSchema = Yup.object().shape({
+    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
+    password: Yup.string().required('Password is required')
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      remember: true
+    },
+    validationSchema: LoginSchema,
+    onSubmit: () => {
+     
+      const userData = {
+        email: values.email,
+        password: values.password,
+      };
+      loginUser(userData);
+    }
+  });
 
   if (auth.isAuthenticated) {
     history.push("/dashboard");
   }
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
 
-    const userData = {
-      email: email,
-      password: password,
-    };
-
-    loginUser(userData);
+  const handleShowPassword = () => {
+    setShowPassword((show) => !show);
   };
 
   return (
     <div className="Login">
 
+<div className="header-profile-login">
+        <Wave
+          fill="#FA7268"
+          paused={false}
+          options={{
+            height: 60,
+            amplitatude: 40,
+            speed: 0.2,
+            points: 4,
+          }}
+        />
+
+        <div className="wave-overlap3">
+          <Wave
+            fill="#e34c67"
+            paused={false}
+            options={{
+              height: 90,
+              amplitatude: 40,
+              speed: 0.1,
+              points: 4,
+            }}
+          />
+        </div>
+
+        <div className="wave-overlap4">
+          <Wave
+            fill="#C62368"
+            paused={false}
+            options={{
+              height: 110,
+              amplitatude: 40,
+              speed: 0.1,
+              points: 4,
+            }}
+          />
+        </div>
+      </div>
+
 <h1 className="title-text-login">Login</h1>
 
       <div className="LoginContent">
-        
+
         <h1 className="desc-text-login">
           Don't have an account? <Link to="/register">Register</Link>
         </h1>
 
-        <form noValidate onSubmit={onSubmit}>
-          <div className="form-box">
-            <TextField
-              fullWidth
-              id="filled-basic"
-              label="Email"
-              variant="outlined"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              error={errors.email || errors.emailnotfound}
-              helperText={errors.email || errors.emailnotfound}
-              id="email"
-              type="email"
-             
-            />
-          </div>
+        <FormikProvider value={formik}>
+      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+        <Stack spacing={3}>
+          <TextField
+            fullWidth
+            autoComplete="username"
+            type="email"
+            label="Email address"
+            {...getFieldProps('email')}
+            error={Boolean(touched.email && errors.email)}
+            helperText={touched.email && errors.email}
+          />
 
-          <div className="form-box">
-            <TextField
-              fullWidth
-              id="filled-basic"
-              label="Password"
-              variant="outlined"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              id="password"
-              type="password"
-              error = {errors.password || errors.passwordincorrect}
-              helperText={errors.password || errors.passwordincorrect}
-            />
-          </div>
+          <TextField
+            fullWidth
+            autoComplete="current-password"
+            type={showPassword ? 'text' : 'password'}
+            label="Password"
+            {...getFieldProps('password')}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleShowPassword} edge="end">
+                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+            error={Boolean(touched.password && errors.password)}
+            helperText={touched.password && errors.password}
+          />
+        </Stack>
 
-          <div className="button">
-            <Button fullWidth
-          size="large" type="submit" variant="contained">
-              Login
-            </Button>
-          </div>
-        </form>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
+          <FormControlLabel
+            control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
+            label="Remember me"
+          />
 
-        <h1 className="desc-text-login">
-          <Link variant="subtitle2" to="/forgotpassword" underline="hover">
+          <Link  variant="subtitle2" to="/forgotpassword" underline="hover">
             Forgot password?
           </Link>
-        </h1>
+        </Stack>
+
+        <LoadingButton
+          fullWidth
+          size="large"
+          type="submit"
+          variant="contained"
+          loading={isSubmitting}
+        >
+          Login
+        </LoadingButton>
+      </Form>
+    </FormikProvider>
+      </div>
+
+      <div className="footer-profile-login">
+        <Wave
+          className="wave"
+          fill="#FA7268"
+          paused={false}
+          options={{
+            height: 60,
+            amplitatude: 40,
+            speed: 0.2,
+            points: 4,
+          }}
+        />
+
+        <div className="wave-overlap">
+          <Wave
+            className="wave"
+            fill="#e34c67"
+            paused={false}
+            options={{
+              height: 90,
+              amplitatude: 40,
+              speed: 0.1,
+              points: 4,
+            }}
+          />
+        </div>
+
+        <div className="wave-overlap">
+          <Wave
+            className="wave"
+            fill="#C62368"
+            paused={false}
+            options={{
+              height: 110,
+              amplitatude: 40,
+              speed: 0.1,
+              points: 4,
+            }}
+          />
+        </div>
       </div>
     </div>
   );
@@ -92,7 +215,6 @@ const Login = ({ auth, loginUser, history, errors }) => {
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
@@ -100,140 +222,7 @@ Login.propTypes = {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  errors: state.errors,
+
 });
 
 export default connect(mapStateToProps, { loginUser })(Login);
-
-/*
-
-
-
-  <Link to="/" className="btn-flat waves-effect">
-              <i className="material-icons left">keyboard_backspace</i> Back to
-              home
-            </Link>
-
-
-
-
-            
-  constructor() {
-    super();
-    this.state = {
-      email: "",
-      password: "",
-      errors: {}
-    };
-  }
-
-
-  componentDidMount() {
-    // If logged in and user navigates to Login page, should redirect them to dashboard
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
-    }
-
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
-    }
-  }
-
-  onChange = e => {
-    this.setState({ [e.target.id]: e.target.value });
-  };
-
-  onSubmit = e => {
-    e.preventDefault();
-
-    const userData = {
-      email: this.state.email,
-      password: this.state.password
-    };
-
-    this.props.loginUser(userData);
-  };
-
-  render() {
-    const { errors } = this.state;
-
-    return (
-      <div className="container">
-        <div style={{ marginTop: "4rem" }} className="row">
-          <div className="col s8 offset-s2">
-            <Link to="/" className="btn-flat waves-effect">
-              <i className="material-icons left">keyboard_backspace</i> Back to
-              home
-            </Link>
-            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-              <h4>
-                <b>Login</b> below
-              </h4>
-              <p className="grey-text text-darken-1">
-                Don't have an account? <Link to="/register">Register</Link>
-              </p>
-            </div>
-            <form noValidate onSubmit={this.onSubmit}>
-              <div className="input-field col s12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.email}
-                  error={errors.email}
-                  id="email"
-                  type="email"
-                  className={classnames("", {
-                    invalid: errors.email || errors.emailnotfound
-                  })}
-                />
-                <label htmlFor="email">Email</label>
-                <span className="red-text">
-                  {errors.email}
-                  {errors.emailnotfound}
-                </span>
-              </div>
-              <div className="input-field col s12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.password}
-                  error={errors.password}
-                  id="password"
-                  type="password"
-                  className={classnames("", {
-                    invalid: errors.password || errors.passwordincorrect
-                  })}
-                />
-                <label htmlFor="password">Password</label>
-                <span className="red-text">
-                  {errors.password}
-                  {errors.passwordincorrect}
-                </span>
-              </div>
-              <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                <button
-                  style={{
-                    width: "150px",
-                    borderRadius: "3px",
-                    letterSpacing: "1.5px",
-                    marginTop: "1rem"
-                  }}
-                  type="submit"
-                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                >
-                  Login
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    );
-  }
-   */

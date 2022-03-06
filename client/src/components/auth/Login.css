@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  flex: 1;
 }
 
 .LoginContent {
@@ -13,10 +14,14 @@
   justify-content: center;
   border-radius: 30px 30px 30px 30px;
   background-color: rgb(255, 255, 255);
-  min-width: 400px;
+  height: 60%;
+  width: 50%;
   min-height: 400px;
+  min-width: 400px;
   margin-top: 5%;
   margin-bottom: 5%;
+  max-height: 600px;
+  max-width: 600px;
 }
 
 .title-text-login {
@@ -24,15 +29,14 @@
   color: rgb(255, 255, 255);
   font-size: 50px;
   text-align: center;
-  margin-top: 10%;
+ 
 }
 
 .desc-text-login {
   font-family: "PT Sans", sans-serif;
   color: rgb(0, 0, 0);
   font-size: 20px;
-  margin-left: 10px;
-  margin-top: 10px;
+  margin-bottom: 5%;
   font-weight: lighter;
 }
 
@@ -71,14 +75,6 @@ form{
   display: flex;
   flex-direction: column;
   margin-top: 30px;
-}
-
-video-login{
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: -1;
 }
 
 .wave {
