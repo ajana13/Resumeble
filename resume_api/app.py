@@ -25,9 +25,8 @@ from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords 
 from nltk.tokenize import word_tokenize
 import requests
-import phonenumbers
 from tika import parser
-import en_core_web_sm
+# import en_core_web_sm
 app = Flask(__name__)
 
 # load pre-trained model
@@ -101,11 +100,7 @@ def extract_text_from_doc(doc_path):
         # text = [line.replace('\t', ' ') for line in temp.split('\n') if line]
         # raw_text = ' '.join(text)
         return resume_lines
-        # text = docx2txt.process(doc_path)  # Extract text from docx file
-        # clean_text = text.replace("\r", "\n").replace("\t", " ")  # Normalize text blob
-        # resume_lines = clean_text.splitlines(True)  # Split text blob into individual lines
-        # resume_lines = [re.sub('\s+', ' ', line.strip()) for line in resume_lines if line.strip()]  # Remove empty strings and whitespaces
-        # return ' '.join(resume_lines)
+
     except KeyError:
         text = textract.process(doc_path)
         text = text.decode("utf-8")
@@ -113,6 +108,21 @@ def extract_text_from_doc(doc_path):
         resume_lines = clean_text.splitlines(True)  # Split text blob into individual lines
         resume_lines = [re.sub('\s+', ' ', line.strip()) for line in resume_lines if line.strip()]  # Remove empty strings and whitespaces
         return ' '.join(resume_lines)
+
+def extract_text(file_path, extension):
+    '''
+    Wrapper function to detect the file extension and call text extraction function accordingly
+    :param file_path: path of file of which text is to be extracted
+    :param extension: extension of file `file_name`
+    '''
+    text = ''
+    if extension == '.pdf':
+        for page in extract_text_from_pdf(file_path):
+            text += ' ' + page
+    elif extension == '.docx' or extension == '.doc':
+        text = extract_text_from_doc(file_path)
+    # text = segment(text)
+    return text
 
 #we define the route /
 @app.route('/')
