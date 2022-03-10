@@ -102,7 +102,7 @@ const Login = ({ auth, loginUser, history}) => {
         </div>
       </div>
 
-<h1 className="title-text-login">Login</h1>
+    <h1 className="title-text-login">Login</h1>
 
       <div className="LoginContent">
 
