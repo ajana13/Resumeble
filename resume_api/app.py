@@ -25,6 +25,7 @@ from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords 
 from nltk.tokenize import word_tokenize
 import requests
+import phonenumbers
 from tika import parser
 # import en_core_web_sm
 app = Flask(__name__)
@@ -124,11 +125,172 @@ def extract_text(file_path, extension):
     # text = segment(text)
     return text
 
+def extract_entity_sections(text):
+    '''
+    Helper function to extract all the raw text from sections of resume
+    :param text: Raw text of resume
+    :return: dictionary of entities
+    '''
+    text_split = [i.strip() for i in text.split('\n')]
+     # sections_in_resume = [i for i in text_split if i.lower() in sections]
+    entities = {}
+    key = False
+    for phrase in text_split:
+        if len(phrase) == 1:
+            p_key = phrase
+        else:
+            p_key = set(phrase.lower().split()) & set(cs.RESUME_SECTIONS)
+        try:
+            p_key = list(p_key)[0]
+        except IndexError:
+            pass
+        if p_key in cs.RESUME_SECTIONS:
+            entities[p_key] = []
+            key = p_key
+        elif key and phrase.strip():
+            entities[key].append(phrase)
+    # entity_key = False
+    # for entity in entities.keys():
+    #     sub_entities = {}
+    #     for entry in entities[entity]:
+    #         if u'\u2022' not in entry:
+    #             sub_entities[entry] = []
+    #             entity_key = entry
+    #         elif entity_key:
+    #             sub_entities[entity_key].append(entry)
+    #     entities[entity] = sub_entities
+
+    # pprint.pprint(entities)
+
+    # make entities that are not found None
+    # for entity in cs.RESUME_SECTIONS:
+    #     if entity not in entities.keys():
+    #         entities[entity] = None 
+    return entities
+
+# https://towardsdatascience.com/something-from-nothing-use-nlp-and-ml-to-extract-and-structure-web-data-3f49b2f72b13
+def extract_name(resume_text):
+    #Using NER to find people names in the text. 
+    doc=nlp(resume_text)
+    persons=[X.text for X in doc.ents if X.label_ == 'PERSON']
+    persons_dict=dict.fromkeys(persons,0)
+    persons=list(persons_dict)
+
+    final_names=[]
+    for person in persons: 
+        if len(word_tokenize(person)) >= 2:
+            string_name=re.sub(r"[^a-zA-Z0-9]+", ' ', person).strip()
+            final_names.append(string_name)
+    return final_names[0] if len(final_names) > 0 else ""
+
+def extract_mobile_number(text):
+    '''
+    Helper function to extract mobile number from text
+    :param text: plain text extracted from resume file
+    :return: string of extracted mobile numbers
+    '''
+    # Found this complicated regex on : https://zapier.com/blog/extract-links-email-phone-regex/
+    try:
+        return list(iter(phonenumbers.PhoneNumberMatcher(text, None)))[0].raw_string
+    except:
+        try:
+            phone = re.findall(re.compile(r'(?:(?:\+?([1-9]|[0-9][0-9]|[0-9][0-9][0-9])\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([0-9][1-9]|[0-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?'), text)
+            if phone:
+                number = ''.join(phone[0])
+                if len(number) > 10:
+                    return '+' + number
+                else:
+                    return number
+        except:
+            return ""
+
+def extract_mobile_number(text):
+    '''
+    Helper function to extract mobile number from text
+    :param text: plain text extracted from resume file
+    :return: string of extracted mobile numbers
+    '''
+    # Found this complicated regex on : https://zapier.com/blog/extract-links-email-phone-regex/
+    try:
+        return list(iter(phonenumbers.PhoneNumberMatcher(text, None)))[0].raw_string
+    except:
+        try:
+            phone = re.findall(re.compile(r'(?:(?:\+?([1-9]|[0-9][0-9]|[0-9][0-9][0-9])\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([0-9][1-9]|[0-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?'), text)
+            if phone:
+                number = ''.join(phone[0])
+                if len(number) > 10:
+                    return '+' + number
+                else:
+                    return number
+        except:
+            return ""
+
+def extract_email(email):
+    email = re.findall("([^@|\s]+@[^@]+\.[^@|\s]+)", email)
+    if email:
+        try:
+            return email[0].split()[0].strip(';')
+        except IndexError:
+            return None
+
+def extract_skills(resume_text):
+    '''
+    Helper function to extract skills from spacy nlp text
+    :param nlp_text: object of `spacy.tokens.doc.Doc`
+    :param noun_chunks: noun chunks extracted from nlp text
+    :return: list of skills extracted
+    '''
+    # noun_chunks = nlp.noun_chunks
+    nlp_text = nlp(resume_text)
+    
+    # removing stopwords and implementing word tokenization
+    tokens = [token.text for token in nlp_text if not token.is_stop]
+    
+    # reading the csv file
+    data = pd.read_csv(os.path.join(os.path.dirname(__file__), 'skills.csv')) 
+    # data = pd.read_csv("skills.csv")
+    
+    # extract values
+    skills = list(data.columns.values)
+
+    skillset = set()
+    
+    # check for one-grams (example: python)
+    for token in tokens:
+        if token.lower() in skills:
+            skillset.append(token)
+    
+    for token in nlp_text.noun_chunks:
+        token = token.text.lower().strip()
+        if token in skills:
+            skillset.append(token)
+            
+    # generate bigrams and trigrams (like Machine Learning)
+    n_grams = list(map(' '.join, nltk.everygrams(ft, 2, 3)))
+    for n_gram in n_grams:
+        token =  n_grams.strip()
+        if n_gram in skills:
+            skillset.append(token)
+    
+    return [i.capitalize() for i in set([i.lower() for i in skillset])]
+
 #we define the route /
 @app.route('/')
 def welcome():
     # return a json
-    return jsonify({'status': 'api working'})
+    resume = "./TimothyNguyen2022.pdf"
+    resume_text = extract_text(resume, os.path.splitext(resume)[1])
+    name = extract_name(resume_text)
+    phone = extract_mobile_number(resume_text)
+    email = extract_email(resume_text)
+    # skills = extract_skills(resume_text)
+    res = {
+        "name": name,
+        "phone": phone,
+        "email": email
+    }
+    return jsonify(res)
+    
 
 if __name__ == '__main__':
     #define the localhost ip and the port that is going to be used
