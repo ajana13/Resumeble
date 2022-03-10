@@ -247,8 +247,8 @@ def extract_skills(resume_text):
     tokens = [token.text for token in nlp_text if not token.is_stop]
     
     # reading the csv file
-    data = pd.read_csv(os.path.join(os.path.dirname(__file__), 'skills.csv')) 
-    # data = pd.read_csv("skills.csv")
+    # data = pd.read_csv(os.path.join(os.path.dirname(__file__), 'skills.csv')) 
+    data = pd.read_csv("skills.csv")
     
     # extract values
     skills = list(data.columns.values)
@@ -258,19 +258,19 @@ def extract_skills(resume_text):
     # check for one-grams (example: python)
     for token in tokens:
         if token.lower() in skills:
-            skillset.append(token)
+            skillset.add(token)
     
     for token in nlp_text.noun_chunks:
         token = token.text.lower().strip()
         if token in skills:
-            skillset.append(token)
+            skillset.add(token)
             
     # generate bigrams and trigrams (like Machine Learning)
-    n_grams = list(map(' '.join, nltk.everygrams(ft, 2, 3)))
-    for n_gram in n_grams:
-        token =  n_grams.strip()
-        if n_gram in skills:
-            skillset.append(token)
+    # n_grams = list(map(' '.join, nltk.everygrams(ft, 2, 3)))
+    # for n_gram in n_grams:
+    #     token =  n_grams.strip()
+    #     if n_gram in skills:
+    #         skillset.append(token)
     
     return [i.capitalize() for i in set([i.lower() for i in skillset])]
 
@@ -283,11 +283,12 @@ def welcome():
     name = extract_name(resume_text)
     phone = extract_mobile_number(resume_text)
     email = extract_email(resume_text)
-    # skills = extract_skills(resume_text)
+    skills = extract_skills(resume_text)
     res = {
         "name": name,
         "phone": phone,
-        "email": email
+        "email": email,
+        "skills": skills
     }
     return jsonify(res)
     
