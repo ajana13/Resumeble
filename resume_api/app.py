@@ -274,7 +274,9 @@ def extract_skills(resume_text):
     
     return [i.capitalize() for i in set([i.lower() for i in skillset])]
 
-#we define the route /
+    
+
+#we define the route
 @app.route('/')
 def welcome():
     # return a json
