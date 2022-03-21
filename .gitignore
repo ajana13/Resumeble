@@ -29,6 +29,7 @@ profile_api/node_modules
 # Config files
 config/*.env
 resume_parser/config/*.env
+resume_api/companies_sorted.csv
 config/*.json
 **.env
 **/s3config.json
