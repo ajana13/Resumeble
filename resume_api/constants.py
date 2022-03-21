@@ -43,8 +43,7 @@ objective = (
     'summary',
     'career summary',
     'professional summary',
-    'summary of qualifications',
-    # 'digital'
+    'summary of qualifications'
 )
 
 project = (

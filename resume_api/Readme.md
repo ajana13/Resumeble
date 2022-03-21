@@ -1,0 +1,1 @@
+https://frankcorso.dev/setting-up-python-environment-venv-requirements.html

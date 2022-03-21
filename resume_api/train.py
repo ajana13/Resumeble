@@ -1,5 +1,3 @@
-import numpy as np # linear algebra
-import pandas as pd
 import spacy
 import json
 import re
