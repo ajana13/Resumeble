@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify
+from flask import Flask, request, jsonify
 import io
 import os
 import re
@@ -512,11 +512,19 @@ def extract_work_experience(entities):
                     company[curr_company]["designation"][-1][1] += (text + "\n")
     return company
 
+ALLOWED_EXTENSIONS = set(['pdf'])
+
+@app.route('/', methods=['GET'])
+def hello():
+    return 'Hello World'
+
 #we define the route
-@app.route('/')
-def welcome():
+@app.route('/parse_resume', methods=['POST'])
+def parseResume():
     # return a json
-    resume = "./TimothyNguyen2022.pdf"
+    resume = request.files['file']
+    print(resume)
+    # resume = "./TimothyNguyen2022.pdf"
     resume_text = extract_text(resume, os.path.splitext(resume)[1])
     name = extract_name(resume_text)
     phone = extract_mobile_number(resume_text)

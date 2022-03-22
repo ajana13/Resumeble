@@ -19,8 +19,8 @@ services:
     #   - mongodb_container
     ports:
       - "5001:5000"
-    volumes:
-      - ./client:/app
+    # volumes:
+    #   - ./client:/app
     environment:
       - IS_DOCKER=Yes
   auth:
@@ -30,23 +30,23 @@ services:
     restart: unless-stopped
     # links:
     #   - mongodb_container
-    volumes:
-      - ./:/usr/src/app
+    # volumes:
+    #   - ./:/usr/src/app
     ports:
       - "5002:5000"
     environment:
       - IS_DOCKER=Yes
-  # resume_parser:
+  # resumeapi:
   #   build:
-  #     context: resume_parser
+  #     context: resumeapi
   #     dockerfile: Dockerfile
   #   restart: unless-stopped
-  #   links:
-  #     - mongodb_container
-  #   volumes:
-  #     - ./:/usr/src/app
+  #   # links:
+  #   #   - mongodb_container
   #   ports:
   #     - "5003:5000"
+  #   environment:
+  #     - IS_DOCKER=Yes
   nginx:
     image: nginx:alpine
     ports:
@@ -57,5 +57,6 @@ services:
     depends_on:
       - client
       - auth
+      # - resumeapi
 # volumes:
 #   mongodb_data_container

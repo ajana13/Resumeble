@@ -7,17 +7,18 @@ import {
 
 export const uploadResumeRequest = (userData)  => async dispatch => {
     await axios
-        .post('/resume/', userData, {
+        .post('/resumeapi/parse_resume', userData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         })
-        .then(res => 
+        .then(res => {
+            console.log(res);
             dispatch({
                 type: SET_UPLOAD_RESUME,
-                payload: res.data
+                payload: res
             })
-        ).catch(err => {
+        }).catch(err => {
             dispatch({
                 type: FAILURE_UPLOAD_FILE,
                 payload: err
