@@ -514,12 +514,12 @@ def extract_work_experience(entities):
 
 ALLOWED_EXTENSIONS = set(['pdf'])
 
-@app.route('/', methods=['GET'])
+@app.route('/resumeapi', methods=['GET'])
 def hello():
     return 'Hello World'
 
 #we define the route
-@app.route('/parse_resume', methods=['POST'])
+@app.route('/resumeapi/parse_resume', methods=['POST'])
 def parseResume():
     # return a json
     resume = request.files['file']
@@ -549,4 +549,4 @@ def parseResume():
 if __name__ == '__main__':
     #define the localhost ip and the port that is going to be used
     # in some future article, we are going to use an env variable instead a hardcoded port 
-    app.run(host='0.0.0.0', port=os.getenv('PORT'))
+    app.run(host='0.0.0.0', port=5001)

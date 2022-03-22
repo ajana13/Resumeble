@@ -4,7 +4,8 @@ const passport = require('passport');
 
 const path = require('path');
 const multer = require('multer');
-require('dotenv').config({ path: path.resolve(__dirname, './config/.env') });
+require('dotenv').config();
+// require('dotenv').config({ path: path.resolve(__dirname, './config/.env') });
 
 // eslint-disable-next-line no-unused-vars
 const auth = require('./routes/auth');

@@ -33,7 +33,7 @@ function FileUpload ({ auth, history }) {
           setPreviewSrc(fileReader.result);
         };
         fileReader.readAsDataURL(uploadedFile);
-        setIsPreviewAvailable(uploadedFile.name.match(/\.(pdf|doc|docx)$/));
+        setIsPreviewAvailable(uploadedFile.name.match(/\.(pdf)$/));
     };
 
     const updateBorder = (dragState) => {
