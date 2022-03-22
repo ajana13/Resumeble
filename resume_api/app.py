@@ -526,7 +526,6 @@ def welcome():
     experience_section = extract_work_experience(entities)
     education_degrees = extract_degree("\n".join(entities['education']))
     universites = extract_education(entities['education'])
-    print(experience_section)
     res = {
         "name": name,
         "phone": phone,
