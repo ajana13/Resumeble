@@ -5,9 +5,9 @@ import {
 } from './types';
 // import { modifyFiles } from './utils'
 
-export const uploadResumeRequest = (userData)  => async dispatch => {
-    await axios
-        .post('/resumeapi/parse_resume', userData, {
+export const uploadResumeRequest = formData  => dispatch => {
+    axios
+        .post('/resumeapi/parse_resume', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

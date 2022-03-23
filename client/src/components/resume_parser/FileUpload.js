@@ -7,7 +7,7 @@ import './FileUpload.css';
 // import UploadService from "../services/FileUploadService";
 import {  uploadResumeRequest } from "../../redux/actions/resumeActions";
 
-function FileUpload ({ auth, history }) {
+function FileUpload ({ auth, uploadResumeRequest, history }) {
 
     const [file, setFile] = React.useState(null);
     const [previewSrc, setPreviewSrc] = React.useState('');
@@ -48,9 +48,10 @@ function FileUpload ({ auth, history }) {
         event.preventDefault();
         const formData = new FormData();
         console.log(file);
+        console.log(file.name)
         formData.append('name', file.name);
         formData.append('file', file);
-        uploadResumeRequest(formData)
+        uploadResumeRequest(formData);
     }
     
 
@@ -105,6 +106,7 @@ function FileUpload ({ auth, history }) {
 }
 // https://www.pluralsight.com/guides/uploading-files-with-reactjs
 FileUpload.propTypes = {
+    uploadResumeRequest: PropTypes.func.isRequired,
     history: PropTypes.shape({
         push: PropTypes.func.isRequired,
     }).isRequired,
@@ -119,4 +121,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
+    { uploadResumeRequest }
 )(FileUpload);

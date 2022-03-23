@@ -29,6 +29,8 @@ import phonenumbers
 import constants as cs
 from job_titles.src.find_job_titles import FinderAcora
 # import en_core_web_sm
+from werkzeug.utils import secure_filename
+import logging
 app = Flask(__name__)
 
 # load pre-trained model
@@ -423,7 +425,7 @@ def extract_degree(resume_text):
     # print(nlp_text)
     # Sentence Tokenizer
     nlp_text = [sent.text.strip() for sent in nlp_text.sents]
-    print(nlp_text)
+    # print(nlp_text)
     edu = {}
     # Extract education degree
     for index, text in enumerate(nlp_text):
@@ -522,10 +524,15 @@ def hello():
 @app.route('/resumeapi/parse_resume', methods=['POST'])
 def parseResume():
     # return a json
+    logging.info(request.files)
     resume = request.files['file']
-    print(resume)
-    # resume = "./TimothyNguyen2022.pdf"
-    resume_text = extract_text(resume, os.path.splitext(resume)[1])
+    filename = secure_filename(resume.filename)
+    text = ""
+    for page in extract_text_from_pdf(filename):
+           text += ' ' + page
+    resume_text = extract_text(filename, '.pdf')
+    # if hasattr(resume_text, 'data'):
+    # resume_text = resume_text['data']
     name = extract_name(resume_text)
     phone = extract_mobile_number(resume_text)
     email = extract_email(resume_text)

@@ -23,7 +23,7 @@ import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from './Iconify';
 
-const Login = ({ auth, loginUser, history}) => {
+const Login = ({ auth, loginUser, history }) => {
 
 
   const [showPassword, setShowPassword] = useState(false);
@@ -41,7 +41,6 @@ const Login = ({ auth, loginUser, history}) => {
     },
     validationSchema: LoginSchema,
     onSubmit: () => {
-     
       const userData = {
         email: values.email,
         password: values.password,
@@ -138,11 +137,11 @@ const Login = ({ auth, loginUser, history}) => {
                 </InputAdornment>
               )
             }}
-            error={Boolean(touched.password && errors.password)}
-            helperText={touched.password && errors.password}
+            error={Boolean(touched.password || errors.password)}
+            helperText={touched.password || errors.password}
           />
         </Stack>
-
+        
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
           <FormControlLabel
             control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
@@ -221,8 +220,7 @@ Login.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth,
-
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { loginUser })(Login);
