@@ -24,45 +24,6 @@ const LoginForgot = ({ auth, sendResetPasswordLink, history, errors }) => {
   return (
     <div className="Login-forgot">
 
-    <div className="header-profile-login-forgot">
-            <Wave
-              fill="#FA7268"
-              paused={false}
-              options={{
-                height: 60,
-                amplitatude: 40,
-                speed: 0.2,
-                points: 4,
-              }}
-            />
-    
-            <div className="wave-overlap3">
-              <Wave
-                fill="#e34c67"
-                paused={false}
-                options={{
-                  height: 90,
-                  amplitatude: 40,
-                  speed: 0.1,
-                  points: 4,
-                }}
-              />
-            </div>
-    
-            <div className="wave-overlap4">
-              <Wave
-                fill="#C62368"
-                paused={false}
-                options={{
-                  height: 110,
-                  amplitatude: 40,
-                  speed: 0.1,
-                  points: 4,
-                }}
-              />
-            </div>
-          </div>
-    
     <h1 className="title-text-login-forgot">Forgot Password</h1>
     
           <div className="LoginContentForgot">
@@ -119,8 +80,74 @@ const LoginForgot = ({ auth, sendResetPasswordLink, history, errors }) => {
                 </div>
               </div>
            
+  
+        </div>
+  );
+};
+
+LoginForgot.propTypes = {
+  sendResetPasswordLink: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+    mapStateToProps,
+    { sendResetPasswordLink }
+)(LoginForgot);
+
+
+
+/*
+ <div className="header-profile-login-forgot">
+            <Wave
+              fill="#FA7268"
+              paused={false}
+              options={{
+                height: 60,
+                amplitatude: 40,
+                speed: 0.2,
+                points: 4,
+              }}
+            />
     
-          <div className="footer-profile-login">
+            <div className="wave-overlap3">
+              <Wave
+                fill="#e34c67"
+                paused={false}
+                options={{
+                  height: 90,
+                  amplitatude: 40,
+                  speed: 0.1,
+                  points: 4,
+                }}
+              />
+            </div>
+    
+            <div className="wave-overlap4">
+              <Wave
+                fill="#C62368"
+                paused={false}
+                options={{
+                  height: 110,
+                  amplitatude: 40,
+                  speed: 0.1,
+                  points: 4,
+                }}
+              />
+            </div>
+          </div>
+    
+
+             <div className="footer-profile-login">
             <Wave
               className="wave"
               fill="#FA7268"
@@ -161,25 +188,4 @@ const LoginForgot = ({ auth, sendResetPasswordLink, history, errors }) => {
               />
             </div>
           </div>
-        </div>
-  );
-};
-
-LoginForgot.propTypes = {
-  sendResetPasswordLink: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
-});
-
-export default connect(
-    mapStateToProps,
-    { sendResetPasswordLink }
-)(LoginForgot);
+*/

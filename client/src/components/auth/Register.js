@@ -37,44 +37,7 @@ const Register = ({ auth, errors, registerUser, history }) => {
   return (
     <div className="Register">
 
-<div className="header-profile-register">
-        <Wave
-          fill="#FA7268"
-          paused={false}
-          options={{
-            height: 60,
-            amplitatude: 40,
-            speed: 0.2,
-            points: 4,
-          }}
-        />
 
-        <div className="wave-overlap3">
-          <Wave
-            fill="#e34c67"
-            paused={false}
-            options={{
-              height: 90,
-              amplitatude: 40,
-              speed: 0.1,
-              points: 4,
-            }}
-          />
-        </div>
-
-        <div className="wave-overlap4">
-          <Wave
-            fill="#C62368"
-            paused={false}
-            options={{
-              height: 110,
-              amplitatude: 40,
-              speed: 0.1,
-              points: 4,
-            }}
-          />
-        </div>
-      </div>
 
 <h1 className="title-text-register">Register</h1>
 
@@ -192,9 +155,74 @@ const Register = ({ auth, errors, registerUser, history }) => {
             </div>
          
           </div>
-       
+      
+    </div>
+  );
+};
 
-      <div className="footer-profile-register">
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+    mapStateToProps,
+    { registerUser }
+)(withRouter(Register));
+
+
+/*
+
+<div className="header-profile-register">
+        <Wave
+          fill="#FA7268"
+          paused={false}
+          options={{
+            height: 60,
+            amplitatude: 40,
+            speed: 0.2,
+            points: 4,
+          }}
+        />
+
+        <div className="wave-overlap3">
+          <Wave
+            fill="#e34c67"
+            paused={false}
+            options={{
+              height: 90,
+              amplitatude: 40,
+              speed: 0.1,
+              points: 4,
+            }}
+          />
+        </div>
+
+        <div className="wave-overlap4">
+          <Wave
+            fill="#C62368"
+            paused={false}
+            options={{
+              height: 110,
+              amplitatude: 40,
+              speed: 0.1,
+              points: 4,
+            }}
+          />
+        </div>
+      </div>
+
+
+  <div className="footer-profile-register">
         <Wave
           className="wave"
           fill="#FA7268"
@@ -235,25 +263,7 @@ const Register = ({ auth, errors, registerUser, history }) => {
           />
         </div>
       </div>
-    </div>
-  );
-};
 
-Register.propTypes = {
-  registerUser: PropTypes.func.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
-};
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
-});
 
-export default connect(
-    mapStateToProps,
-    { registerUser }
-)(withRouter(Register));
+*/
