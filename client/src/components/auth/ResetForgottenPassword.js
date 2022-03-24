@@ -125,3 +125,11 @@ export default connect(
     mapStateToProps,
     { resetPassword }
 )(ResetForgottenPassword);
+
+
+/*
+
+
+
+
+*/
