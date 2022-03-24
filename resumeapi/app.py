@@ -531,8 +531,6 @@ def parseResume():
     for page in extract_text_from_pdf(filename):
            text += ' ' + page
     resume_text = extract_text(filename, '.pdf')
-    # if hasattr(resume_text, 'data'):
-    # resume_text = resume_text['data']
     name = extract_name(resume_text)
     phone = extract_mobile_number(resume_text)
     email = extract_email(resume_text)

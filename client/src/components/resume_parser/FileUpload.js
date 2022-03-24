@@ -10,8 +10,8 @@ import {  uploadResumeRequest } from "../../redux/actions/resumeActions";
 function FileUpload ({ auth, uploadResumeRequest, history }) {
 
     const [file, setFile] = React.useState(null);
-    const [previewSrc, setPreviewSrc] = React.useState('');
     const [errorMsg, setErrorMsg] = React.useState('');
+    const [previewSrc, setPreviewSrc] = React.useState('');
     const [isPreviewAvailable, setIsPreviewAvailable] = React.useState(false); // state to show preview only for images
     const dropRef = React.useRef(); // React ref for managing the hover state of droppable area
   
@@ -47,11 +47,11 @@ function FileUpload ({ auth, uploadResumeRequest, history }) {
     const handleOnSubmit = (event) => {
         event.preventDefault();
         const formData = new FormData();
-        console.log(file);
-        console.log(file.name)
         formData.append('name', file.name);
         formData.append('file', file);
         uploadResumeRequest(formData);
+
+        // 
     }
     
 
@@ -80,21 +80,6 @@ function FileUpload ({ auth, uploadResumeRequest, history }) {
                             </div>
                             )}
                         </Dropzone>
-                        {previewSrc ? (
-                            isPreviewAvailable ? (
-                            <div className="image-preview">
-                                <img className="preview-image" src={previewSrc} alt="Preview" />
-                            </div>
-                            ) : (
-                            <div className="preview-message">
-                                <h1 className="text-sub">No preview available for this file</h1>
-                            </div>
-                            )
-                        ) : (
-                            <div className="preview-message">
-                            <h1 className="text-sub">Image preview will be shown here after selection</h1>
-                            </div>
-                        )}
                     </div>
                     <div className="form-group">
                         <Button className="btn btn-primary" type="submit">Upload</Button>

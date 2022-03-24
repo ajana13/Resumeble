@@ -10,53 +10,25 @@ import TextField from "@mui/material/TextField";
 import Wave from "react-wavify";
 import classnames from "classnames";
 import "./Login.css";
-import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
-import { useFormik, Form, FormikProvider } from 'formik';
-import {
-  Stack,
-  Checkbox,
-  IconButton,
-  InputAdornment,
-  FormControlLabel
-} from '@mui/material';
-import { LoadingButton } from '@mui/lab';
-// component
-import Iconify from './Iconify';
 
-const Login = ({ auth, loginUser, history }) => {
+const Login = ({errors, auth, loginUser, history}) => {
 
-
-  const [showPassword, setShowPassword] = useState(false);
-
-  const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required')
-  });
-
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-      remember: true
-    },
-    validationSchema: LoginSchema,
-    onSubmit: () => {
-      const userData = {
-        email: values.email,
-        password: values.password,
-      };
-      loginUser(userData);
-    }
-  });
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
   if (auth.isAuthenticated) {
-    history.push("/dashboard");
+    history.push('/dashboard');
   }
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
+  const onSubmit = e => {
+    e.preventDefault();
 
-  const handleShowPassword = () => {
-    setShowPassword((show) => !show);
+    const userData = {
+      email: email,
+      password: password
+    };
+
+    loginUser(userData);
   };
 
   return (
@@ -104,67 +76,84 @@ const Login = ({ auth, loginUser, history }) => {
     <h1 className="title-text-login">Login</h1>
 
       <div className="LoginContent">
+           <div className="back-home-link" >
+             <h1 className="desc-text-login">
+            <Link  to="/"  style={{ textDecoration: 'none' }} >
+              Back to Home
+            </Link>
+            </h1>
+            </div>
 
-        <h1 className="desc-text-login">
-          Don't have an account? <Link to="/register">Register</Link>
-        </h1>
 
-        <FormikProvider value={formik}>
-      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Stack spacing={3}>
-          <TextField
-            fullWidth
-            autoComplete="username"
-            type="email"
-            label="Email address"
-            {...getFieldProps('email')}
-            error={Boolean(touched.email && errors.email)}
-            helperText={touched.email && errors.email}
-          />
+              
+              <h1 className="desc-text-login">
+                Don't have an account? <Link to="/register" style={{ textDecoration: 'none' }} >Register</Link>
+              </h1>
+           
 
-          <TextField
-            fullWidth
-            autoComplete="current-password"
-            type={showPassword ? 'text' : 'password'}
-            label="Password"
-            {...getFieldProps('password')}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleShowPassword} edge="end">
-                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-            error={Boolean(touched.password || errors.password)}
-            helperText={touched.password || errors.password}
-          />
-        </Stack>
-        
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-          <FormControlLabel
-            control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
-            label="Remember me"
-          />
 
-          <Link  variant="subtitle2" to="/forgotpassword" underline="hover">
-            Forgot password?
-          </Link>
-        </Stack>
+           <div className="form-login">
+            <form  noValidate onSubmit={onSubmit}>
+               <div>
+               <h1 className="input-text-login">Email</h1>
+                <TextField
+                   fullWidth
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    error={errors.email}
+                    id="email"
+                    type="email"
+                    className={classnames(" ", {
+                      invalid: errors.email || errors.emailnotfound
+                    })}
+                />
+                
+                <span className="red-text">
+                {errors.email}
+                  {errors.emailnotfound}
+              </span>
+              </div>
 
-        <LoadingButton
-          fullWidth
-          size="large"
-          type="submit"
-          variant="contained"
-          loading={isSubmitting}
-        >
-          Login
-        </LoadingButton>
-      </Form>
-    </FormikProvider>
-      </div>
+
+             <div>
+             <h1 className="input-text-login">Password</h1>
+                <TextField
+                    fullWidth
+                    onChange={e => setPassword(e.target.value)}
+                    value={password}
+                    error={errors.password}
+                    id="password"
+                    type="password"
+                    className={classnames(" ", {
+                      invalid: errors.password || errors.passwordincorrect
+                    })}
+                />
+                <span className="red-text">
+                {errors.password}
+                {errors.passwordincorrect}
+              </span>
+              </div>
+             
+             <div className="button">
+                <Button
+                    type="submit"
+                    fullWidth
+                    size="large"
+                    variant="contained"
+                >
+                  Login
+                </Button>
+                </div>
+            </form>
+            </div>
+
+
+              <h1 className="forget-password-text-login">
+                Forget password? <Link to="/forgotpassword" style={{ textDecoration: 'none' }} >Reset Password</Link>
+              </h1>
+         
+          </div>
+       
 
       <div className="footer-profile-login">
         <Wave
@@ -214,13 +203,18 @@ const Login = ({ auth, loginUser, history }) => {
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
 });
 
-export default connect(mapStateToProps, { loginUser })(Login);
+export default connect(
+    mapStateToProps,
+    { loginUser }
+)(Login);
