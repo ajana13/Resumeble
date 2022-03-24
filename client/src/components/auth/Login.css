@@ -17,11 +17,13 @@
   height: 60%;
   width: 50%;
   min-height: 400px;
-  min-width: 400px;
+  min-width: 400px; 
   margin-top: 5%;
   margin-bottom: 5%;
-  max-height: 600px;
-  max-width: 600px;
+}
+
+.form-login{
+  width: 80%
 }
 
 .title-text-login {
@@ -29,33 +31,45 @@
   color: rgb(255, 255, 255);
   font-size: 50px;
   text-align: center;
- 
 }
 
 .desc-text-login {
   font-family: "PT Sans", sans-serif;
   color: rgb(0, 0, 0);
   font-size: 20px;
+  font-weight:lighter;
+}
+
+.forget-password-text-login {
+  font-family: "PT Sans", sans-serif;
+  color: rgb(0, 0, 0);
+  font-size: 20px;
   margin-bottom: 5%;
+  margin-top: 5%;
   font-weight: lighter;
 }
 
-form{
-  width: 90%;
-}
-.form-box{
-  margin-top: 10%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.input-text-login {
+  font-family: "PT Sans", sans-serif;
+  color: rgb(0, 0, 0);
+  font-size: 20px;
+  font-weight: lighter;
+  margin-top: 4%;
 }
 
-.button{
-  margin-top: 10%;
+.red-text{
+  color: rgb(160, 0, 0);
+}
+
+.back-home-link{
+  margin-top: 5%;
+}
+
+.button {
+  margin-top: 5%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 5%;
 }
 
 .header-profile-login {

@@ -1,0 +1,109 @@
+.Login-forgot{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    flex: 1;
+  }
+  
+  .LoginContentForgot{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+    border-radius: 30px 30px 30px 30px;
+    background-color: rgb(255, 255, 255);
+    width: 50%;
+    min-height: 200px;
+    min-width: 400px; 
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
+  
+  .form-login-forgot{
+    width: 80%
+  }
+  
+  .title-text-login-forgot{
+    font-family: "PT Sans", sans-serif;
+    color: rgb(255, 255, 255);
+    font-size: 50px;
+    text-align: center;
+  }
+  
+  .desc-text-login-forgot{
+    font-family: "PT Sans", sans-serif;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    font-weight:lighter;
+  }
+  
+  .forget-password-text-login-forgot{
+    font-family: "PT Sans", sans-serif;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    margin-bottom: 5%;
+    margin-top: 5%;
+    font-weight: lighter;
+  }
+  
+  .input-text-login-forgot{
+    font-family: "PT Sans", sans-serif;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    font-weight: lighter;
+    margin-top: 4%;
+  }
+  
+  .red-text{
+    color: rgb(160, 0, 0);
+  }
+  
+  .back-home-link-forgot{
+    margin-top: 5%;
+  }
+  
+  .button-forgot {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .header-profile-login-forgot {
+    height: 180px;
+    width: 100%;
+    background-size: auto 180px;
+    transform: rotate(180deg);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .footer-profile-login-forgot{
+    width: 100%;
+    height: 110px;
+    background-size: auto 180px;
+    transform: rotate(180deg);
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+  }
+  
+  .wave {
+    transform: rotate(180deg);
+  }
+  .wave-overlap {
+    margin-top: -160px;
+  }
+  .wave-overlap2 {
+    margin-top: -160px;
+  }
+  .wave-overlap3 {
+    margin-top: -140px;
+  }
+  .wave-overlap4 {
+    margin-top: -140px;
+  }
+  
