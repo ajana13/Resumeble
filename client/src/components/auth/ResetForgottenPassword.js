@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { resetPassword } from "../../redux/actions/authActions";
@@ -23,7 +22,6 @@ const ResetForgottenPassword = ({ auth, resetPassword, history, errors }) => {
       secondPassword:  passwordTwice
     };
 
-    
     resetPassword(userData, history);
   };
 
@@ -127,3 +125,11 @@ export default connect(
     mapStateToProps,
     { resetPassword }
 )(ResetForgottenPassword);
+
+
+/*
+
+
+
+
+*/

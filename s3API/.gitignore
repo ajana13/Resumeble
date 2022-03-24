@@ -1,0 +1,4 @@
+#config file
+config/*.json
+s3API/config/*.env
+s3API/config/*.json

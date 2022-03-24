@@ -7,6 +7,10 @@
 #Python virtual environment
 **/fastapi-env
 
+# Resume environment
+resumeapi/env/
+env/
+
 # Node modules
 node_modules
 client/node_modules
@@ -24,7 +28,8 @@ profile_api/node_modules
 
 # Config files
 config/*.env
-resume_parser/config/*.env
+resumeapi/config/*.env
+resumeapi/companies_sorted.csv
 config/*.json
 **.env
 **/s3config.json

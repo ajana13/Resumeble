@@ -1,3 +1,5 @@
+//this route is not used. delete later
+
 const express = require('express');
 
 const router = express.Router();

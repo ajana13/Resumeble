@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
+import Button from "@mui/material/Button";
 import Dropzone from 'react-dropzone';
+import './FileUpload.css';
 // import UploadService from "../services/FileUploadService";
 import {  uploadResumeRequest } from "../../redux/actions/resumeActions";
 
-function FileUpload ({ auth, history }) {
+function FileUpload ({ auth, uploadResumeRequest, history }) {
 
     const [file, setFile] = React.useState(null);
-    const [previewSrc, setPreviewSrc] = React.useState('');
     const [errorMsg, setErrorMsg] = React.useState('');
+    const [previewSrc, setPreviewSrc] = React.useState('');
     const [isPreviewAvailable, setIsPreviewAvailable] = React.useState(false); // state to show preview only for images
     const dropRef = React.useRef(); // React ref for managing the hover state of droppable area
   
@@ -31,7 +33,7 @@ function FileUpload ({ auth, history }) {
           setPreviewSrc(fileReader.result);
         };
         fileReader.readAsDataURL(uploadedFile);
-        setIsPreviewAvailable(uploadedFile.name.match(/\.(pdf|doc|docx)$/));
+        setIsPreviewAvailable(uploadedFile.name.match(/\.(pdf)$/));
     };
 
     const updateBorder = (dragState) => {
@@ -45,18 +47,19 @@ function FileUpload ({ auth, history }) {
     const handleOnSubmit = (event) => {
         event.preventDefault();
         const formData = new FormData();
-        console.log(file);
         formData.append('name', file.name);
         formData.append('file', file);
-        uploadResumeRequest(formData)
+        uploadResumeRequest(formData);
+
+        // 
     }
     
 
 	return (
-        <div style={{ height: "75vh" }} className="container valign-wrapper">
+        <div className='FileUpload'>
             <div className="row">
                 <form onSubmit={handleOnSubmit}>
-                    <h3>React File Upload</h3>
+                    <h1 className="text-sub">React File Upload</h1>
                     {/* The onDragEnter function will be triggered when the file is over 
                     the drop area and onDragLeave function will be triggered when the file 
                     is removed from the drop area. */}
@@ -68,33 +71,18 @@ function FileUpload ({ auth, history }) {
                             {({ getRootProps, getInputProps }) => (
                             <div {...getRootProps({ className: 'drop-zone' })} ref={dropRef}>
                                 <input {...getInputProps()} />
-                                <p>Drag and drop a file OR click here to select a file</p>
+                                <h1 className="text-sub">Drag and drop a file OR click here to select a file</h1>
                                 {file && (
                                 <div>
-                                    <strong>Selected file:</strong> {file.name}
+                                    <strong className="text-sub">Selected file:</strong> {file.name}
                                 </div>
                                 )}
                             </div>
                             )}
                         </Dropzone>
-                        {previewSrc ? (
-                            isPreviewAvailable ? (
-                            <div className="image-preview">
-                                <img className="preview-image" src={previewSrc} alt="Preview" />
-                            </div>
-                            ) : (
-                            <div className="preview-message">
-                                <p>No preview available for this file</p>
-                            </div>
-                            )
-                        ) : (
-                            <div className="preview-message">
-                            <p>Image preview will be shown here after selection</p>
-                            </div>
-                        )}
                     </div>
                     <div className="form-group">
-                        <button className="btn btn-primary" type="submit">Upload</button>
+                        <Button className="btn btn-primary" type="submit">Upload</Button>
                     </div>
                 </form>
             </div>
@@ -103,6 +91,7 @@ function FileUpload ({ auth, history }) {
 }
 // https://www.pluralsight.com/guides/uploading-files-with-reactjs
 FileUpload.propTypes = {
+    uploadResumeRequest: PropTypes.func.isRequired,
     history: PropTypes.shape({
         push: PropTypes.func.isRequired,
     }).isRequired,
@@ -117,4 +106,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
+    { uploadResumeRequest }
 )(FileUpload);

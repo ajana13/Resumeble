@@ -9,7 +9,7 @@
     "start_dev": "nodemon -e js,html server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Nam Phan",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.1",

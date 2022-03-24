@@ -2,15 +2,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import * as Yup from 'yup';
+import { useState } from 'react';
 import { loginUser } from "../../redux/actions/authActions";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Wave from "react-wavify";
 import classnames from "classnames";
+import "./Login.css";
 
-const Login = ({ auth, loginUser, history, errors }) => {
+const Login = ({errors, auth, loginUser, history}) => {
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  
   if (auth.isAuthenticated) {
     history.push('/dashboard');
   }
@@ -27,79 +32,94 @@ const Login = ({ auth, loginUser, history, errors }) => {
   };
 
   return (
-      <div className="container">
-        <div style={{ marginTop: "4rem" }} className="row">
-          <div className="col s8 offset-s2">
-            <Link to="/" className="btn-flat waves-effect">
-              <i className="material-icons left">keyboard_backspace</i> Back to
-              home
+    <div className="Login">
+
+
+
+    <h1 className="title-text-login">Login</h1>
+
+      <div className="LoginContent">
+           <div className="back-home-link" >
+             <h1 className="desc-text-login">
+            <Link  to="/"  style={{ textDecoration: 'none' }} >
+              Back to Home
             </Link>
-            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-              <h4>
-                <b>Login</b> below
-              </h4>
-              <p className="grey-text text-darken-1">
-                Don't have an account? <Link to="/register">Register</Link>
-              </p>
+            </h1>
             </div>
-            <form noValidate onSubmit={onSubmit}>
-              <div className="input-field col s12">
-                <input
+
+
+              
+              <h1 className="desc-text-login">
+                Don't have an account? <Link to="/register" style={{ textDecoration: 'none' }} >Register</Link>
+              </h1>
+           
+
+
+           <div className="form-login">
+            <form  noValidate onSubmit={onSubmit}>
+               <div>
+               <h1 className="input-text-login">Email</h1>
+                <TextField
+                   fullWidth
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     error={errors.email}
                     id="email"
                     type="email"
-                    className={classnames("", {
+                    className={classnames(" ", {
                       invalid: errors.email || errors.emailnotfound
                     })}
                 />
-                <label htmlFor="email">Email</label>
+                
                 <span className="red-text">
                 {errors.email}
                   {errors.emailnotfound}
               </span>
               </div>
-              <div className="input-field col s12">
-                <input
+
+
+             <div>
+             <h1 className="input-text-login">Password</h1>
+                <TextField
+                    fullWidth
                     onChange={e => setPassword(e.target.value)}
                     value={password}
                     error={errors.password}
                     id="password"
                     type="password"
-                    className={classnames("", {
+                    className={classnames(" ", {
                       invalid: errors.password || errors.passwordincorrect
                     })}
                 />
-                <label htmlFor="password">Password</label>
                 <span className="red-text">
                 {errors.password}
                 {errors.passwordincorrect}
               </span>
               </div>
-              <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                <button
-                    style={{
-                      width: "150px",
-                      borderRadius: "3px",
-                      letterSpacing: "1.5px",
-                      marginTop: "1rem"
-                    }}
+             
+             <div className="button">
+                <Button
                     type="submit"
-                    className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                    fullWidth
+                    size="large"
+                    variant="contained"
                 >
                   Login
-                </button>
-              </div>
+                </Button>
+                </div>
             </form>
-            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-              <p className="grey-text text-darken-1">
-                Forget password? <Link to="/forgotpassword">Reset Password</Link>
-              </p>
             </div>
+
+
+              <h1 className="forget-password-text-login">
+                Forget password? <Link to="/forgotpassword" style={{ textDecoration: 'none' }} >Reset Password</Link>
+              </h1>
+         
           </div>
-        </div>
-      </div>
+       
+
+     
+    </div>
   );
 };
 
@@ -122,123 +142,89 @@ export default connect(
     { loginUser }
 )(Login);
 
-  /*
-  constructor() {
-    super();
-    this.state = {
-      email: "",
-      password: "",
-      errors: {}
-    };
-  }
 
+/*
 
-  componentDidMount() {
-    // If logged in and user navigates to Login page, should redirect them to dashboard
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
-    }
-  }
+<div className="header-profile-login">
+        <Wave
+          fill="#FA7268"
+          paused={false}
+          options={{
+            height: 60,
+            amplitatude: 40,
+            speed: 0.2,
+            points: 4,
+          }}
+        />
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
-    }
+        <div className="wave-overlap3">
+          <Wave
+            fill="#e34c67"
+            paused={false}
+            options={{
+              height: 90,
+              amplitatude: 40,
+              speed: 0.1,
+              points: 4,
+            }}
+          />
+        </div>
 
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
-    }
-  }
-
-  onChange = e => {
-    this.setState({ [e.target.id]: e.target.value });
-  };
-
-  onSubmit = e => {
-    e.preventDefault();
-
-    const userData = {
-      email: this.state.email,
-      password: this.state.password
-    };
-
-    this.props.loginUser(userData);
-  };
-
-  render() {
-    const { errors } = this.state;
-
-    return (
-      <div className="container">
-        <div style={{ marginTop: "4rem" }} className="row">
-          <div className="col s8 offset-s2">
-            <Link to="/" className="btn-flat waves-effect">
-              <i className="material-icons left">keyboard_backspace</i> Back to
-              home
-            </Link>
-            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-              <h4>
-                <b>Login</b> below
-              </h4>
-              <p className="grey-text text-darken-1">
-                Don't have an account? <Link to="/register">Register</Link>
-              </p>
-            </div>
-            <form noValidate onSubmit={this.onSubmit}>
-              <div className="input-field col s12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.email}
-                  error={errors.email}
-                  id="email"
-                  type="email"
-                  className={classnames("", {
-                    invalid: errors.email || errors.emailnotfound
-                  })}
-                />
-                <label htmlFor="email">Email</label>
-                <span className="red-text">
-                  {errors.email}
-                  {errors.emailnotfound}
-                </span>
-              </div>
-              <div className="input-field col s12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.password}
-                  error={errors.password}
-                  id="password"
-                  type="password"
-                  className={classnames("", {
-                    invalid: errors.password || errors.passwordincorrect
-                  })}
-                />
-                <label htmlFor="password">Password</label>
-                <span className="red-text">
-                  {errors.password}
-                  {errors.passwordincorrect}
-                </span>
-              </div>
-              <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                <button
-                  style={{
-                    width: "150px",
-                    borderRadius: "3px",
-                    letterSpacing: "1.5px",
-                    marginTop: "1rem"
-                  }}
-                  type="submit"
-                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                >
-                  Login
-                </button>
-              </div>
-            </form>
-          </div>
+        <div className="wave-overlap4">
+          <Wave
+            fill="#C62368"
+            paused={false}
+            options={{
+              height: 110,
+              amplitatude: 40,
+              speed: 0.1,
+              points: 4,
+            }}
+          />
         </div>
       </div>
-    );
-  }
-   */
+
+
+       <div className="footer-profile-login">
+        <Wave
+          className="wave"
+          fill="#FA7268"
+          paused={false}
+          options={{
+            height: 60,
+            amplitatude: 40,
+            speed: 0.2,
+            points: 4,
+          }}
+        />
+
+        <div className="wave-overlap">
+          <Wave
+            className="wave"
+            fill="#e34c67"
+            paused={false}
+            options={{
+              height: 90,
+              amplitatude: 40,
+              speed: 0.1,
+              points: 4,
+            }}
+          />
+        </div>
+
+        <div className="wave-overlap">
+          <Wave
+            className="wave"
+            fill="#C62368"
+            paused={false}
+            options={{
+              height: 110,
+              amplitatude: 40,
+              speed: 0.1,
+              points: 4,
+            }}
+          />
+        </div>
+      </div>
+
+*/
