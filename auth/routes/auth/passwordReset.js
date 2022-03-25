@@ -8,7 +8,8 @@ const MailModule = require('../../util/mail/mailModule');
 
 const path = require('path');
 const multer = require('multer');
-require('dotenv').config({ path: path.resolve(__dirname, '../../config/.env') });
+require('dotenv').config();
+// require('dotenv').config({ path: path.resolve(__dirname, '../../config/.env') });
 
 const router = express.Router();
 
@@ -55,10 +56,10 @@ router.post('/password_reset', (req, res) => {
         `Hello ${user.name}, your password....`, // Preview Text
         `<p>Hello ${user.name}, your password can be reset by visiting the following link:</p>
         <br />
-        <p><a href=http://localhost:5050/auth/password_reset/${uniqueCode}>http://localhost:5050/auth/password_reset/${uniqueCode}</a></p>
+        <p><a href=http://localhost/auth/password_reset/${uniqueCode}>http://localhost/auth/password_reset/${uniqueCode}</a></p>
         <br />
         <p>Best,</p>
-        <p>BUILD UMass</p>`
+        <p>Resumeble</p>`
       );
       msg.send();
 

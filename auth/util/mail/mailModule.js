@@ -1,9 +1,9 @@
 const sendGrid = require('@sendgrid/mail');
 const path = require('path');
 const { isEmailValid } = require('./mailUtils');
-require('dotenv').config({
-  path: path.resolve(__dirname, '../../config/.env'),
-});
+// require('dotenv').config({
+//   path: path.resolve(__dirname, '../../config/.env'),
+// });
 
 class MailModule {
   constructor(recipientEmail, subject = '', previewText = '', bodyHTML = '') {

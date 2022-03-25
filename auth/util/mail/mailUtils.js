@@ -26,5 +26,5 @@ function isEmailValid(email) {
   }
   
   module.exports = {
-    isEmailValid,
+    isEmailValid
   };

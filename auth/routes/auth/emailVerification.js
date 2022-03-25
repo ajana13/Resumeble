@@ -50,7 +50,7 @@ router.post('/verify', (req, res) => {
         `Hello ${user.name}, thank's for....`, // Preview Text
         `<p>Hello ${user.name}, thank's for creating a Resumeble Account</p>
         <br />
-        <p>You can verify your email by using this link: <a href=http://localhost:5000/auth/verify/${uniqueCode}>http://localhost:5000/auth/verify/${uniqueCode}</a></p>
+        <p>You can verify your email by using this link: <a href=http://localhost/auth/verify/${uniqueCode}>http://localhost/auth/verify/${uniqueCode}</a></p>
         <br />
         <p>Best,</p>
         <p>Resumeble</p>`

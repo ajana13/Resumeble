@@ -2,12 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import * as Yup from 'yup';
-import { useState } from 'react';
 import { loginUser } from "../../redux/actions/authActions";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Wave from "react-wavify";
 import classnames from "classnames";
 import "./Login.css";
 

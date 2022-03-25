@@ -14,9 +14,9 @@ function ConfirmResetPasswordPage({ auth, history }) {
             <div className="row">
                 <div className="col s12 center-align">
                     <h4>
-                        <b>You have reset your password</b>
+                        <b style={{color: "white"}}>You have reset your password</b>
                     </h4>
-                    <p className="grey-text text-darken-1">
+                    <p>
                         Return <Link to="/">Home</Link>
                     </p>
                     <p>
