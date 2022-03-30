@@ -2,7 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 
-require('dotenv').config({ path: path.resolve(__dirname, './config/.env') });
+// require('dotenv').config({ path: path.resolve(__dirname, './config/.env') });
+require('dotenv').config();
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -29,7 +30,6 @@ app.use(express.urlencoded({ extended: false }));
 //routes
 const routes = require('./routes');
 app.use('/api/routes', routes);
-app.use(express.static('client/build'));
 
 // app.use("/api/profile", require("./routes/profile"));
 

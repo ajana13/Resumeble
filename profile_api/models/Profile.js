@@ -26,6 +26,9 @@ const ProfileSchema = new mongoose.Schema({
   status: {
     type: String,
   },
+  phone: {
+    type: String
+  },
   skills: {
     type: [String]
   },
@@ -49,11 +52,11 @@ const ProfileSchema = new mongoose.Schema({
         type: String
       },
       from: {
-        type: Date,
+        type: String,
         // required: true
       },
       to: {
-        type: Date
+        type: String
       },
       current: {
         type: Boolean,
@@ -66,7 +69,7 @@ const ProfileSchema = new mongoose.Schema({
   ],
   education: [
     {
-      school: {
+      university: {
         type: String,
         // required: true
       },
@@ -75,15 +78,18 @@ const ProfileSchema = new mongoose.Schema({
         //required: true
       },
       fieldofstudy: {
+        type: [String],
+        //required: true
+      },
+      gpa: {
+        type: String
+      },
+      from: {
         type: String,
         //required: true
       },
-      from: {
-        type: Date,
-        //required: true
-      },
       to: {
-        type: Date
+        type: String
       },
       current: {
         type: Boolean,

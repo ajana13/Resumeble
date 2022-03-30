@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../config/.env') });
+require('dotenv').config();
 
 const Profile = require('../models/Profile');
 const User = require('../models/User');
@@ -28,10 +28,13 @@ router.get('/getProfile/:userid', async (req,res) => {
       message: "No profile found",
     });
   } catch (err) {
+    /*
     res.status(400).json({
       status: 400,
       message: err.message,
     });
+    */
+    return err;
   }
 })
 
@@ -69,16 +72,18 @@ router.post('/test/:userid', async (req,res) => {
 
 // @desc: POST create or update profile
 // @route: http://localhost:3001/api/profile/upsertProfile/userID
-// test user: http://localhost:3001/api/profile/upsertProfile/61f0b6aac0cd2758d8ba6c0b
+// test user: http://localhost:3001/api/profile/upsertProfile/60cfc4d9d48268570cf3f07a
 router.post('/upsertProfile/:userid', async (req,res) => {
 try {
     let user = await User.findById(req.params.userid);
     if (user) {
       try {
         // Using upsert option (creates new doc if no match is found):
+        console.log(req.body);
+        console.log(user.id);
         const profile = await Profile.findOneAndUpdate(
           {userID: user.id},
-          {$set: req.body},
+          {$set: req.body.data},
           {new: true, upsert: true, setDefaultsOnInsert: true}
         ); //.lean();
         
@@ -98,10 +103,13 @@ try {
           message: "No profile found",
         });
       } catch (err) {
+        return err;
+        /*
         res.status(400).json({
           status: 400,
           message: err.message,
         });
+        */
       }
     }
     res.status(400).json({
@@ -109,10 +117,13 @@ try {
       message: "No user found",
     });
   } catch (err) {
+    /*
     res.status(400).json({
       status: 400,
       message: err.message,
     });
+    */
+    return err;
   }
 
 })
