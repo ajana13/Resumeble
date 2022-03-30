@@ -1,0 +1,9 @@
+pyOpenSSL
+Flask
+numpy
+pandas
+spacy==2.3.0
+nltk
+skillNer
+IPython
+https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-2.3.0/en_core_web_lg-2.3.0.tar.gz#egg=en_core_web_sm

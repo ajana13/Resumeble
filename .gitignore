@@ -9,6 +9,8 @@
 
 # Resume environment
 resumeapi/env/
+resumeapi/resumeapi/
+resume_score/resume_score
 env/
 
 # Node modules

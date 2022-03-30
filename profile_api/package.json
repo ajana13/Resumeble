@@ -2,14 +2,14 @@
   "name": "profile_api",
   "version": "1.0.0",
   "description": "Coming soon!",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "start_dev": "nodemon -e js,html server.js"
+    "start": "node app.js",
+    "start_dev": "nodemon -e js,html app.js"
   },
   "keywords": [],
-  "author": "Nam Phan",
+  "author": "Timothy Nguyen/Nam Phan",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.1",
