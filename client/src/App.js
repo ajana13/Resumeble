@@ -20,7 +20,7 @@ import LoginForgot from "./components/auth/LoginForgot";
 import ConfirmResetPasswordPage from "./components/auth/ConfirmResetPasswordPage";
 import ResetForgottenPassword from "./components/auth/ResetForgottenPassword";
 import "./App.css";
-
+import 'materialize-css/dist/css/materialize.min.css';
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth

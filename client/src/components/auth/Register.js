@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerUser } from "../../redux/actions/authActions";
 import classnames from "classnames";
+import loginBack from "./images/desert2.jpg";
 
 const Register = ({ auth, errors, registerUser, history }) => {
 
@@ -31,18 +32,20 @@ const Register = ({ auth, errors, registerUser, history }) => {
 
   // e => setEmail(e.target.value)
   return (
-    <div className="container">
+    <div>
+    <div  style={{backgroundImage: `url(${loginBack})`,backgroundSize: "cover", height: "100vh",overflow: "auto"}}>
+    <div className="container" style={{backgroundColor:"rgba(0, 0, 0, 0.7)",marginTop:"20%" }}>
       <div className="row">
         <div className="col s8 offset-s2">
-          <Link to="/" className="btn-flat waves-effect">
+          <Link to="/" className="btn-flat waves-effect white-text">
             <i className="material-icons left">keyboard_backspace</i> Back to
             home
           </Link>
           <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-            <h4>
+            <h4 className="white-text">
               <b>Register</b> below
             </h4>
-            <p className="grey-text text-darken-1">
+            <p className="white-text text-darken-1">
               Already have an account? <Link to="/login">Log in</Link>
             </p>
           </div>
@@ -54,7 +57,7 @@ const Register = ({ auth, errors, registerUser, history }) => {
                   error={errors.name}
                   id="name"
                   type="text"
-                  className={classnames("", {
+                  className={classnames("white-text", {
                     invalid: errors.name
                   })}
               />
@@ -68,7 +71,7 @@ const Register = ({ auth, errors, registerUser, history }) => {
                   error={errors.email}
                   id="email"
                   type="email"
-                  className={classnames("", {
+                  className={classnames("white-text", {
                     invalid: errors.email
                   })}
               />
@@ -82,7 +85,7 @@ const Register = ({ auth, errors, registerUser, history }) => {
                   error={errors.password}
                   id="password"
                   type="password"
-                  className={classnames("", {
+                  className={classnames("white-text", {
                     invalid: errors.password
                   })}
               />
@@ -96,7 +99,7 @@ const Register = ({ auth, errors, registerUser, history }) => {
                   error={errors.password2}
                   id="password2"
                   type="password"
-                  className={classnames("", {
+                  className={classnames("white-text", {
                     invalid: errors.password2
                   })}
               />
@@ -109,7 +112,8 @@ const Register = ({ auth, errors, registerUser, history }) => {
                     width: "150px",
                     borderRadius: "3px",
                     letterSpacing: "1.5px",
-                    marginTop: "1rem"
+                    marginTop: "1rem",
+                    marginBottom: "1rem"
                   }}
                   type="submit"
                   className="btn btn-large waves-effect waves-light hoverable blue accent-3"
@@ -120,6 +124,8 @@ const Register = ({ auth, errors, registerUser, history }) => {
           </form>
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 

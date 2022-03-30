@@ -4,6 +4,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../redux/actions/authActions";
 import classnames from "classnames";
+import M from "materialize-css";
+import loginBack from "./images/moutin.jpg";
+import './Login.css';
 
 const Login = ({ auth, loginUser, history, errors }) => {
 
@@ -27,18 +30,20 @@ const Login = ({ auth, loginUser, history, errors }) => {
   };
 
   return (
-      <div className="container">
-        <div style={{ marginTop: "4rem" }} className="row">
-          <div className="col s8 offset-s2">
-            <Link to="/" className="btn-flat waves-effect">
-              <i className="material-icons left">keyboard_backspace</i> Back to
+    <div>
+    <div  style={{backgroundImage: `url(${loginBack})`,backgroundSize: "cover", height: "100vh",overflow: "auto"}}>
+      <div className="container" style={{backgroundColor:"rgba(0, 0, 0, 0.7)",marginTop:"20%" }}>
+        <div className="row"  >
+          <div className="col s8 offset-s2" >
+            <Link to="/" className="btn-flat waves-effect ">
+              <i className="material-icons left ">keyboard_backspace</i> Back to
               home
             </Link>
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-              <h4>
-                <b>Login</b> below
+              <h4 className="white-text">
+                <b className="white-text">Login</b> below
               </h4>
-              <p className="grey-text text-darken-1">
+              <p className="white-text text-darken-1">
                 Don't have an account? <Link to="/register">Register</Link>
               </p>
             </div>
@@ -50,7 +55,7 @@ const Login = ({ auth, loginUser, history, errors }) => {
                     error={errors.email}
                     id="email"
                     type="email"
-                    className={classnames("", {
+                    className={classnames("white-text", {
                       invalid: errors.email || errors.emailnotfound
                     })}
                 />
@@ -67,7 +72,7 @@ const Login = ({ auth, loginUser, history, errors }) => {
                     error={errors.password}
                     id="password"
                     type="password"
-                    className={classnames("", {
+                    className={classnames("white-text", {
                       invalid: errors.password || errors.passwordincorrect
                     })}
                 />
@@ -93,12 +98,14 @@ const Login = ({ auth, loginUser, history, errors }) => {
               </div>
             </form>
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-              <p className="grey-text text-darken-1">
+              <p className="white-text text-darken-1">
                 Forget password? <Link to="/forgotpassword">Reset Password</Link>
               </p>
             </div>
           </div>
         </div>
+      </div>
+      </div>
       </div>
   );
 };

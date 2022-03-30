@@ -19,6 +19,8 @@ services:
     #   - mongodb_container
     ports:
       - "5001:5000"
+    volumes:
+      - ./client:/app
     environment:
       - IS_DOCKER=Yes
   auth:

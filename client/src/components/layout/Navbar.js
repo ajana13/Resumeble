@@ -44,7 +44,7 @@ const headersDataLogout = [
 const useStyles = makeStyles(() => ({
     header: {
         // backgroundColor: "#400CCC",
-        background: 'white',
+        background: 'rgba(0, 0, 0, 0.7)',
         boxShadow: 'none',
         paddingRight: "79px",
         paddingLeft: "118px",
@@ -56,7 +56,7 @@ const useStyles = makeStyles(() => ({
     logo: {
         fontFamily: "Work Sans, sans-serif",
         fontWeight: 600,
-        color: "black",
+        color: "white",
         textAlign: "left",
     },
     menuButton: {
@@ -64,12 +64,12 @@ const useStyles = makeStyles(() => ({
         fontWeight: 700,
         size: "18px",
         marginLeft: "38px",
-        color: "black",
+        color: "white",
     },
     toolbar: {
         display: "flex",
         justifyContent: "space-between",
-        color: "black",
+        color: "white",
     },
     drawerContainer: {
         padding: "30px 30px",
