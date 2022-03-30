@@ -29,6 +29,13 @@ services:
     restart: unless-stopped
     environment:
       - IS_DOCKER=Yes
+  profile_api:
+    build:
+      context: profile_api
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      - IS_DOCKER=Yes
   nginx:
     image: nginx:alpine
     ports:
@@ -40,6 +47,7 @@ services:
       - client
       - auth
       - resumeapi
+      - profile_api
 
 # version: "3.8"
 # services:

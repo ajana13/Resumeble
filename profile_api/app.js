@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //routes
 const routes = require('./routes');
-app.use('/api/routes', routes);
+app.use('/profile_api', routes);
 
 // app.use("/api/profile", require("./routes/profile"));
 

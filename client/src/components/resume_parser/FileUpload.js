@@ -5,9 +5,9 @@ import Button from "@mui/material/Button";
 import Dropzone from 'react-dropzone';
 import './FileUpload.css';
 // import UploadService from "../services/FileUploadService";
-import {  uploadResumeRequest } from "../../redux/actions/resumeActions";
+import {  uploadResumeRequest, updateProfile } from "../../redux/actions/resumeActions";
 
-function FileUpload ({ auth, uploadResumeRequest, history }) {
+function FileUpload ({ auth, uploadResumeRequest, updateProfile, history }) {
 
     const [file, setFile] = React.useState(null);
     const [errorMsg, setErrorMsg] = React.useState('');
@@ -44,14 +44,24 @@ function FileUpload ({ auth, uploadResumeRequest, history }) {
         }
     };
 
-    const handleOnSubmit = (event) => {
+    const handleOnSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData();
-        formData.append('name', file.name);
-        formData.append('file', file);
-        uploadResumeRequest(formData);
+        if(file != null) {
+            formData.append('name', file.name);
+            formData.append('file', file);
+            let resumeData = await uploadResumeRequest(formData);
+            // Need to get data and send to api
+            if(resumeData.status === 200) {
+                let profileData = {
+                    "data": resumeData.data
+                }
+                // console.log(auth.user.id);
+                let profile = await updateProfile(profileData, auth.user.id);
+                console.log(profile);
+            }
+        }
 
-        // 
     }
     
 
@@ -92,6 +102,7 @@ function FileUpload ({ auth, uploadResumeRequest, history }) {
 // https://www.pluralsight.com/guides/uploading-files-with-reactjs
 FileUpload.propTypes = {
     uploadResumeRequest: PropTypes.func.isRequired,
+    updateProfile: PropTypes.func.isRequired,
     history: PropTypes.shape({
         push: PropTypes.func.isRequired,
     }).isRequired,
@@ -106,5 +117,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { uploadResumeRequest }
+    { uploadResumeRequest, updateProfile }
 )(FileUpload);

@@ -26,10 +26,12 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import requests
 import phonenumbers
+from date_extractor import extract_dates
 import constants as cs
 from job_titles.src.find_job_titles import FinderAcora
 # import en_core_web_sm
 from werkzeug.utils import secure_filename
+import json
 import logging
 app = Flask(__name__)
 
@@ -412,7 +414,6 @@ def extract_sections(resume_text):
             entities[key].append(phrase)
     return entities
 
-nlp = spacy.load("en_core_web_sm")
 def extract_degree(resume_text):
     '''
     Helper function to extract education from spacy nlp text
@@ -420,7 +421,7 @@ def extract_degree(resume_text):
     :return: tuple of education degree and year if year if found
              else only returns education degree
     '''
-       
+    nlp = spacy.load("en_core_web_sm")
     nlp_text = nlp(resume_text)
     # print(nlp_text)
     # Sentence Tokenizer
@@ -433,11 +434,11 @@ def extract_degree(resume_text):
         for tex in text.split():
             # Replace all special symbols
             tex = re.sub(r'[?|$|.|!|,]', r'', tex)
-            # print(tex)
             if tex.upper() in cs.EDUCATION and tex not in cs.STOPWORDS:
-                edu[tex] = text + nlp_text[index + 1]
-    return list(edu.keys())
-
+                return [resume_text]
+                # edu[tex] = text + nlp_text[index]
+    return list()
+# print(extract_degree("\n".join(entities['education'])))
 RESERVED_WORDS = [
     'school',
     'college',
@@ -458,61 +459,214 @@ RESERVED_WORDS = [
     'tech'
 ]
 
-def extract_education(input_text):
+def extract_university(input_text):
     organizations = []
+
     # we search for each bigram and trigram for reserved words
     # (college, university etc...)
     education = list()
-    for org in input_text:
-        for word in RESERVED_WORDS:
-            if org.lower().find(word) >= 0:
-                education.append(org)
+    for word in RESERVED_WORDS:
+        if input_text.lower().find(word) >= 0:
+            education.append(input_text)
+    
     return education
-# print(entities['education'])
+
+def extract_education_section(entities):
+    university_dict = dict()
+    nlp = spacy.load('en_core_web_sm')
+    curr_university = ''
+    curr_degree = ''
+    begin_date = ''
+    end_date = ''
+    curr_gpa = ""
+    university_dict[curr_university] = {"details": []}
+
+
+    def get_gpa(text):
+        rx = re.compile(r'(\bgpa[ :]+)?(\d+(?:\.\d+)?)[/\d. ]{0,6}(?(1)| *gpa\b)', re.I)
+        m = rx.search(text)
+        if m:
+            return m.group(2)
+        return ""
+        # print(text, "=>", m.group(2), sep=" ")
+
+    for text in entities['education']:
+        found_date = False
+        found_degree = False
+        found_university = False
+        university_list = extract_university(text)
+        degree_list = extract_degree(text)
+        # extracting entities
+
+        if len(university_list) > 0:
+            curr_university = university_list[0]
+            if curr_university not in university_dict:
+                university_dict[curr_university] = {"details": []}
+            found_university = True
+        if len(degree_list) > 0:
+            curr_degree = ''
+            curr_gpa = ""
+            for degree in degree_list:
+                curr_degree += degree
+            university_dict[curr_university]['details'].append([curr_degree, begin_date, end_date, curr_gpa, ""])
+            found_degree = True
+        
+        new_gpa = get_gpa(text)
+        if curr_gpa == '' and new_gpa != '':
+            curr_gpa = new_gpa
+            university_dict[curr_university]["details"][-1][3] = curr_gpa
+            
+        if end_date == '' and '.' not in text:       
+            dates = extract_dates(text)
+            if dates:
+                date_time_start = dates[0].strftime("%m/%Y") 
+                date_time_end = dates[0].strftime("%m/%Y")
+                if len(dates) > 1:
+                    date_time_end = dates[1].strftime("%m/%Y")
+                word_list = text.split()
+                for word in word_list:
+                    if word.lower() == 'now' or  word.lower() == 'present':
+                        date_time_end = 'Present'
+                # new_date = date_time_start + " - " + date_time_end
+                begin_date = date_time_start 
+                end_date = date_time_end
+                if date_time_end == date_time_start:
+                    begin_date = ''
+                found_date = True
+                university_dict[curr_university]['details'][-1][1] = begin_date
+                university_dict[curr_university]['details'][-1][2] = end_date
+        
+        
+        if len(university_dict[curr_university]['details']) > 0:
+            university_dict[curr_university]['details'][-1][2] = end_date
+        if not found_date and not found_degree and not found_university:
+            university_dict[curr_university]["details"][-1][4] += (text + "\n")
+    filtered_university = {comp:details for comp, details in university_dict.items() if len(details['details']) != 0}
+    education = []
+    for uni in filtered_university:
+        for entry in filtered_university[uni]['details']:
+            data = {}
+            data['degree'] = entry[0]
+            data['university'] = uni
+            data['from'] = entry[1]
+            data['to'] = entry[2]
+            data['gpa'] = entry[3]
+            data['description'] = entry[4]
+            education.append(data)
+    # json_data_education = json.dumps(education)
+    return education
 
 def extract_work_experience(entities):
+    # company = dict()
+    # # des_set = set(designation_list.lower())
+    # nlp = spacy.load('en_core_web_sm')
+    # curr_company = 'Unnamed'
+    # company[curr_company] = {"date": [], "designation": []}
+    # if 'experience' in entities:
+    #     for text in entities['experience']:
+    #         test_text = text.split()
+    #         foundCompany = False
+    #         if len(test_text) <= 6:
+    #             for word in company_list:
+    #                 if text.lower() == word:
+    #                     if text not in company:
+    #                         curr_company = text
+    #                         company[text] = {"date": [], "designation": []}
+    #                     break
+    #         match = finder.findall(text)
+    #         # merge intervals
+    #         if len(match) > 0:
+    #             s = [[match[0].start, match[0].end]]
+    #             for i in range(1, len(match)):
+    #                 if s[-1][1] >= match[i].start:
+    #                     s[-1][1] = match[i].end
+    #                 else:
+    #                     s.append([match[i].start, match[i].end])
+    #             if s:
+    #                 for elem in s:
+    #                     t = str(text[elem[0]:elem[1]])
+    #                     company[curr_company]["designation"].append([t, ""])
+                        
+    #         text1 = nlp(text)
+    #         found_date = False
+    #         for word in text1.ents:
+    #             if word.label_ == 'DATE':
+    #                 date = text1[word.start:word.end]
+    #                 company[curr_company]["date"].append(str(date))
+    #                 found_date = True
+    #                 break
+    #         if curr_company and not foundCompany and not found_date and len(match) == 0:
+    #             if len(company[curr_company]["designation"]) > 0:
+    #                 company[curr_company]["designation"][-1][1] += (text + "\n")
+    # return company
+    finder=FinderAcora()
     company = dict()
+    designation = list()
     # des_set = set(designation_list.lower())
     nlp = spacy.load('en_core_web_sm')
-    curr_company = 'Unnamed'
-    company[curr_company] = {"date": [], "designation": []}
-    if 'experience' in entities:
-        for text in entities['experience']:
-            test_text = text.split()
-            foundCompany = False
-            if len(test_text) <= 6:
-                for word in company_list:
-                    if text.lower() == word:
-                        if text not in company:
-                            curr_company = text
-                            company[text] = {"date": [], "designation": []}
-                        break
-            match = finder.findall(text)
-            # merge intervals
-            if len(match) > 0:
-                s = [[match[0].start, match[0].end]]
-                for i in range(1, len(match)):
-                    if s[-1][1] >= match[i].start:
-                        s[-1][1] = match[i].end
-                    else:
-                        s.append([match[i].start, match[i].end])
-                if s:
-                    for elem in s:
-                        t = str(text[elem[0]:elem[1]])
-                        company[curr_company]["designation"].append([t, ""])
-                        
-            text1 = nlp(text)
-            found_date = False
-            for word in text1.ents:
-                if word.label_ == 'DATE':
-                    date = text1[word.start:word.end]
-                    company[curr_company]["date"].append(str(date))
-                    found_date = True
-                    break
-            if curr_company and not foundCompany and not found_date and len(match) == 0:
-                if len(company[curr_company]["designation"]) > 0:
-                    company[curr_company]["designation"][-1][1] += (text + "\n")
-    return company
+    curr_company = ''
+    begin_date = ''
+    end_date = ''
+    company[curr_company] = {"designation": []}
+    for text in entities['experience']:
+        test_text = text.split()
+        foundCompany = False
+        if len(test_text) <= 6:
+            for word in company_list:
+                if text.lower() == word:
+                    begin_date = ""
+                    end_date = ""
+                    if text not in company:
+                        curr_company = text
+                        company[text] = {"designation": []}
+                    foundCompany = True
+        match = finder.findall(text)
+        # merge intervals
+        if len(match) > 0:
+            s = [[match[0].start, match[0].end]]
+            for i in range(1, len(match)):
+                if s[-1][1] >= match[i].start:
+                    s[-1][1] = match[i].end
+                else:
+                    s.append([match[i].start, match[i].end])
+            if s:
+                for elem in s:
+                    t = text[elem[0]:elem[1]]
+                    company[curr_company]["designation"].append([begin_date, end_date, t, ""])
+                    
+        found_date = False
+        if len(test_text) <= 8:
+            dates = extract_dates(text)   
+            if dates:
+                date_time_start = dates[0].strftime("%m/%Y") 
+                date_time_end = dates[0].strftime("%m/%Y")
+                if len(dates) > 1:
+                    date_time_end = dates[1].strftime("%m/%Y")
+                word_list = text.split()
+                for word in word_list:
+                    if word.lower() == 'now' or  word.lower() == 'present':
+                        date_time_end = 'Present'
+                begin_date = date_time_start
+                end_date = date_time_end
+                found_date = True
+        if not foundCompany and not found_date  and len(match) == 0:
+            company[curr_company]["designation"][-1][3] += (text + "\n")
+        if begin_date != '':
+            company[curr_company]["designation"][-1][0] = begin_date
+            company[curr_company]["designation"][-1][1] = end_date
+    filtered_company = {comp:value for comp, value in company.items() if len(value['designation']) != 0}
+    experience = []
+    for company in filtered_company:
+        for entry in filtered_company[company]['designation']:
+            data = {}
+            data['title'] = entry[2]
+            data['company'] = company
+            data['from'] = entry[0]
+            data['to'] = entry[1]
+            data['description'] = entry[3]
+            experience.append(data)
+    # json_data_experience = json.dumps(experience)
+    return experience
 
 ALLOWED_EXTENSIONS = set(['pdf'])
 
@@ -537,16 +691,16 @@ def parseResume():
     skills = extract_skills(resume_text)
     entities = extract_sections(resume_text)
     experience_section = extract_work_experience(entities)
-    education_degrees = extract_degree("\n".join(entities['education']))
-    universites = extract_education(entities['education'])
+    education_section = extract_education_section(entities)
+    # education_degrees = extract_degree("\n".join(entities['education']))
+    # universites = extract_education(entities['education'])
     res = {
         "name": name,
         "phone": phone,
         "email": email,
         "skills": skills,
         "experience": experience_section,
-        "degrees": education_degrees,
-        "universities": universites
+        "education": education_section
     }
     return res
     

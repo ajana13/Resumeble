@@ -13,7 +13,6 @@ const Dashboard = ({ auth, logoutUser }) => {
     logoutUser();
   };
 
-  console.log(name);
 
   if(name !== undefined) {
     return (

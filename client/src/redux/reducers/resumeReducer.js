@@ -3,7 +3,7 @@ import { SET_UPLOAD_RESUME } from "../actions/types";
 const isEmpty = require("is-empty");
 
 const initialState = {
-    documents: [],
+    documents: {},
     loading: false,
     text: '',
 };
@@ -15,7 +15,7 @@ export default function(state = initialState, action) {
         return {
             ...state,
             documents: action.payload,
-            loading: false
+            loading: true
         };
     default:
       return state;

@@ -79,8 +79,6 @@ try {
     if (user) {
       try {
         // Using upsert option (creates new doc if no match is found):
-        console.log(req.body);
-        console.log(user.id);
         const profile = await Profile.findOneAndUpdate(
           {userID: user.id},
           {$set: req.body.data},
