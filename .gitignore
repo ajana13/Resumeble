@@ -30,7 +30,7 @@ profile_api/node_modules
 
 # Config files
 config/*.env
-resumeapi/config/*.env
+resumeapi/*.env
 resumeapi/companies_sorted.csv
 config/*.json
 **.env
